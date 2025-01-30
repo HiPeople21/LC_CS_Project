@@ -162,3 +162,4 @@ cython_debug/
 data_filter/data/
 data_filter/output_data/
 data_filter/dcc_traffic_signals_20221130.csv
+data_filter/database.db
