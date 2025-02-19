@@ -1,23 +1,24 @@
 > Report to be transposed to a HTML file
 
-# Report
+# 1. Report
 
-## Investigation
+## 2. Investigation
 
-## Plan and Design
+## 3. Plan and Design
 
-## Create
+## 4. Create
 
-## Evaluation
+## 5. Evaluation
 
-## References
+## 6. References
 
-## Word Count
+## 7. Summary Word Count
 
-| Section           | Word Count |
-| ----------------- | ---------- |
-| Investigation     | 0          |
-| Plan and Design   | 0          |
-| Create            | 0          |
-| Evaluation        | 0          |
-| References        | 0          |
+| Section                | Word Count |
+| ---------------------- | ---------- |
+| 1. Investigation       | 0          |
+| 2. Plan and Design     | 0          |
+| 3. Create              | 0          |
+| 4. Evaluation          | 0          |
+| 5. References          | 0          |
+| **Total:**             | 0          |
