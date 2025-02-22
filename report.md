@@ -1,6 +1,8 @@
 > Report to be transposed to a HTML file
 
-# 1. Report
+# Report
+
+## 1. Meeting the Brief
 
 ## 2. Investigation
 
@@ -16,9 +18,9 @@
 
 | Section                | Word Count |
 | ---------------------- | ---------- |
-| 1. Investigation       | 0          |
-| 2. Plan and Design     | 0          |
-| 3. Create              | 0          |
-| 4. Evaluation          | 0          |
-| 5. References          | 0          |
+| 1. Meeting the brief   | 0          |
+| 2. Investigation       | 0          |
+| 3. Plan and Design     | 0          |
+| 4. Create              | 0          |
+| 5. Evaluation          | 0          |
 | **Total:**             | 0          |
