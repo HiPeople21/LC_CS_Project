@@ -195,7 +195,7 @@ if __name__ == "__main__":
     # create_tables(DB_FILE)
     # con = sqlite3.connect(DB_FILE)
     # cursor = con.cursor()
-    # cursor.execute("SELECT COUNT(*) FROM data;")
+    # cursor.execute("SELECT * FROM data LIMIT 5;")
     # print(cursor.fetchall())
     # display_data_with_sites()
     pass
