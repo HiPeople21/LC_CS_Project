@@ -1,9 +1,3 @@
-import sys
-import os
-
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.dirname(SCRIPT_DIR))
-
 import sqlite3
 from pathlib import Path
 
@@ -11,9 +5,9 @@ import geopandas
 import matplotlib.pyplot as plt
 import numpy as np
 
-from scipy.stats import gaussian_kde
+from scipy.interpolate import griddata
 
-from data_filter.utils import generate_holiday_dates, YEARS
+from ..data_filter.utils import generate_holiday_dates, YEARS
 
 BASE = Path(__file__).parent
 DB_FILE = BASE.parent / "data_filter/database.db"
@@ -76,10 +70,19 @@ def generate_heatmap(holiday: str, year: int):
         lats.append(lat)
         longs.append(long)
     
-    print(len(longs))
-    # xi, yi = np.mgrid[x.min():x.max():x.size**0.5*1j,y.min():y.max():y.size**0.5*1j]
-    # zi = k(np.vstack([xi.flatten(), yi.flatten()]))
-    ax.scatter(longs, lats)
+    xi = np.linspace(min(longs), max(longs),100)
+    yi = np.linspace(min(lats), max(lats),100)
+    zi = griddata((longs, lats), vols, (xi[None,:], yi[:,None]), method='cubic')
+
+    CS = plt.contourf(xi,yi,zi,25,cmap=plt.cm.Reds)
+    cbar = plt.colorbar()
+    cbar.ax.set_ylim(0)
+
+    # plt.scatter(longs,lats,marker='o',c='b',s=0.5)
+
+    plt.title(f"Congestion Colourbar For {holiday} {year}")
+    plt.xlim(min(longs) - 0.02, max(longs) + 0.02)
+    plt.ylim(min(lats) - 0.02, max(lats) + 0.02)
     plt.show()
 
 def generate_barchart(holiday: str):
