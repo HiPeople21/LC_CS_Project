@@ -1,0 +1,39 @@
+:root {
+    --main-color: #0351AA;
+    --secondary-color: #12CDF8;
+    --accent-color: #000000;
+    --special-button-color: #D9D9D9;
+}
+
+@font-face {
+    font-family: "Kode Mono";
+    src: url(Kode_Mono/KodeMono-VariableFont_wght.ttf);
+}
+
+body {
+    margin: 0;
+}
+
+nav {
+    font-family: "Kode Mono", sans-serif;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--secondary-color);
+    padding: 0 10px;
+    line-height: 2em;
+}
+
+nav span {
+    font-size: 1.5em;
+}
+
+nav h1 {
+    font-weight: 100;
+    font-size: 2em;
+}
+
+body {
+    background-color: var(--main-color);
+}

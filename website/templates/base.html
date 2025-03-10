@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Holiday Traffic Tracker{% block title %}{% endblock %}</title>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{{ url_for('static',
+    filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <nav>
+      <span>Pathfinder</span>
+      <h1>Holiday Traffic Tracker</h1>
+      <span>Statistics</span>
+    </nav>
+    {% block content %} {% endblock %}
+  </body>
+</html>
