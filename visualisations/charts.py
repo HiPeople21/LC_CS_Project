@@ -5,7 +5,7 @@ import geopandas
 import matplotlib.pyplot as plt
 import numpy as np
 import plotly.express as px
-
+import plotly.graph_objects as go
 
 from scipy.interpolate import griddata
 
@@ -56,13 +56,12 @@ for year in YEARS:
             holiday_dates[year][date] = (dates[i].year, dates[i].month, dates[i].day)
 
 
-def generate_heatmap(holiday: str, year: int, show_points: bool=False):
+def generate_heatmap(holiday: str, year: int):
     """Generates heatmap plot
     
     Args:
         holiday (str): Holiday to search for
         year (int): Year to search for
-        show_points (bool): Shows points if true
     """
     date = holiday_dates[year][holiday]
     fig, ax = plt.subplots()
@@ -80,22 +79,30 @@ def generate_heatmap(holiday: str, year: int, show_points: bool=False):
         lats.append(lat)
         longs.append(long)
 
-    xi = np.linspace(min(longs), max(longs), 100)
-    yi = np.linspace(min(lats), max(lats), 100)
-    zi = griddata((longs, lats), vols, (xi[None,:], yi[:,None]), method='cubic')
-    
-    # CS = plt.contour(xi,yi,zi,25,linewidths=0.2,colors='k', vmin=0)
-    plt.pcolor(xi, yi, zi, cmap=plt.cm.Reds, vmin=0)
-    
-    CS = plt.contourf(xi,yi,zi,20,cmap=plt.cm.Reds, vmin = 0)
+    fig = px.density_map(
+        {
+            "Latitude": lats,
+            "Longitude": longs,
+            "Volume": vols                  
+        }, 
+        lat='Latitude', 
+        lon='Longitude', 
+        z='Volume', radius=10,
+        center=dict(lat=53.345481, lon=-6.275819), 
+        zoom=10.5,
+        map_style="open-street-map",
+        
+    )
+    fig.update_layout(
+        dragmode=False
+    )
 
-    plt.colorbar()
-    if show_points:
-        plt.scatter(longs, lats, marker='o', c='b', s=0.1)
-    plt.title(f"Congestion Colourbar For {holiday} {year}")
-    plt.axis([min(longs) - 0.01, max(longs) + 0.01, min(lats) - 0.01, max(lats) + 0.01])
-    plt.savefig("figure")
-
+    path = BASE / f"charts/heatmap/{holiday}-{year}.html"
+    file = open(path, "a+")
+    file.close()
+    fig.write_html(path, config={"scrollZoom": False}, full_html=False)
+    
+    
 def generate_barchart(holiday: str):
     """Generates barchart plot
     
@@ -149,14 +156,20 @@ def generate_barchart(holiday: str):
         )
     
     path = BASE / f"charts/bar/{holiday}.html"
+    
+    # Creates file
     file = open(path, "a+")
     file.close()
-    fig.write_html(path)
+    
+    fig.write_html(path, full_html=False)
     
 if __name__ == "__main__":
-    # generate_heatmap(full_dates[0], YEARS[0])
+    # for year in YEARS:
+    #     if year == 2024:
+    #         for date in partial_dates:
+    #             generate_heatmap(date, year)
+    #     else:
+    #         for date in full_dates:
+    #             generate_heatmap(date, year)
     for date in full_dates:
         generate_barchart(date)
-    # generate_heatmap(full_dates[0], YEARS[0], True)
-        # for i in range(len(full_dates)):
-        #     generate_heatmap(full_dates[i], YEARS[0])
