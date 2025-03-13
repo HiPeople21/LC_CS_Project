@@ -1,60 +1,8 @@
 import sqlite3
-from pathlib import Path
 
-import geopandas
-import matplotlib.pyplot as plt
-import numpy as np
 import plotly.express as px
-import plotly.graph_objects as go
 
-from scipy.interpolate import griddata
-
-from ..data_filter.utils import generate_holiday_dates, YEARS
-
-BASE = Path(__file__).parent
-DB_FILE = BASE.parent / "data_filter/database.db"
-
-
-full_dates = [
-    "New Year's Day",
-    "St Brigid's Day",
-    "St Patrick's Day",
-    "Easter Monday",
-    "May Bank Holiday",
-    "June Bank Holiday",
-    "August Bank Holiday",
-    "October Bank Holiday",
-    "Christmas Day",
-    "St Stephen's Day"
-]
-
-partial_dates = [
-    "New Year's Day",
-    "St Brigid's Day",
-    "St Patrick's Day",
-    "May Bank Holiday",
-    "June Bank Holiday",
-    "August Bank Holiday"
-]
-
-missing_dates = [
-    "Easter Monday",
-    "October Bank Holiday",
-    "Christmas Day",
-    "St Stephen's Day"
-]
-
-holiday_dates = {}
-for year in YEARS:
-    dates = generate_holiday_dates(year)
-    holiday_dates[year] = {}
-    if year != 2024:
-        for i, date in enumerate(full_dates):
-            holiday_dates[year][date] = (dates[i].year, dates[i].month, dates[i].day)
-    elif year == 2024:
-        for i, date in enumerate(partial_dates):
-            holiday_dates[year][date] = (dates[i].year, dates[i].month, dates[i].day)
-
+from .utils import BASE, DB_FILE, holiday_dates, full_dates, missing_dates, partial_dates, YEARS
 
 def generate_heatmap(holiday: str, year: int):
     """Generates heatmap plot
@@ -64,9 +12,6 @@ def generate_heatmap(holiday: str, year: int):
         year (int): Year to search for
     """
     date = holiday_dates[year][holiday]
-    fig, ax = plt.subplots()
-    shapefile = geopandas.read_file(BASE / "dublin_boundary_epsg_4326/dublin_boundary_epsg_4326/dublin_boundary_epsg_4326.shp")
-    shapefile.boundary.plot(ax=ax)
     con = sqlite3.connect(DB_FILE)
     cur = con.cursor()
     cur.execute("SELECT data.sum_volume, sites.latitude, sites.longitude FROM data INNER JOIN sites ON sites.id = data.site_id WHERE year=? AND month=? AND day=? ", (date[0], date[1], date[2]))
@@ -93,13 +38,17 @@ def generate_heatmap(holiday: str, year: int):
         map_style="open-street-map",
         
     )
-    fig.update_layout(
-        dragmode=False
-    )
+    
 
+    # Creates file
     path = BASE / f"charts/heatmap/{holiday}-{year}.html"
     file = open(path, "a+")
     file.close()
+    
+    # Saves figure and prevents zooming as the point radii don't scale with zoom
+    fig.update_layout(
+        dragmode=False
+    )
     fig.write_html(path, config={"scrollZoom": False}, full_html=False)
     
     
@@ -126,10 +75,9 @@ def generate_barchart(holiday: str):
         data.append(cur.fetchall()[0][0])
     
     if holiday in missing_dates:
-    
         fig = px.bar(
             {
-                "Year": YEARS[:-1], 
+                "Year": YEARS[:-1],  # Excludes 2024 data (does not exist)
                 "Total Vehicles Passing Sites": data
             }, 
             x="Year", 
