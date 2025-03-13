@@ -197,3 +197,6 @@ def get_site_data() -> None:
     with open(path, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         return list(reader)
+    
+if __name__ == "__main__":
+    print(get_last_nday_of_month(0, 5, 2024))

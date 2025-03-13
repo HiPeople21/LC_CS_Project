@@ -1,3 +1,27 @@
 {% extends "base.html" %} {% block title %}{% endblock %} {% block content %}
-<h1>Hello</h1>
+<section id="intro">
+    <h2 id="hello">Hello</h2>
+    <p>
+        This is my Leaving Certificate Computer Science project for 2025. The brief can be found <a href="{{ url_for('static',
+        filename='Computer Science Coursework Project Brief 2025.pdf') }}" target="_blank">here</a>.
+        My project has to do with traffic congestion data on all of the 10 public holidays from 2020-2024, except 2024 has some missing data.
+    </p>
+    <p>
+        The <em>Pathfinding</em> page contains a map with a density heatmap of congestion, 
+        the mean of the past years' congestion at each site, and a form, 
+        where you can input a start and end coordinates, 
+        and it'll find the best path according to the heatmap. 
+        If you wish you can comment on if it was useful or not, 
+        and your response will be stored and can be accessed via the <em>Responses</em> page.
+    </p>
+
+    <p>
+        The <em>Statistics</em> page contains bar charts of the total traffic congestion volume for the previous years. 
+        There are also density heatmaps for each holiday and the years of which I have data for.
+    </p>
+
+    <p>
+        The <em>Responses</em> page contains the responses submitted from the <em>Pathfinding</em> page.
+    </p>
+</section>
 {% endblock %}

@@ -112,12 +112,19 @@ def generate_barchart(holiday: str):
     fig.write_html(path, full_html=False)
     
 if __name__ == "__main__":
-    # for year in YEARS:
-    #     if year == 2024:
-    #         for date in partial_dates:
-    #             generate_heatmap(date, year)
-    #     else:
-    #         for date in full_dates:
-    #             generate_heatmap(date, year)
+    for year in YEARS:
+        if year == 2024:
+            for date in partial_dates:
+                generate_heatmap(date, year)
+        else:
+            for date in full_dates:
+                generate_heatmap(date, year)
     for date in full_dates:
         generate_barchart(date)
+    # con = sqlite3.connect(DB_FILE)
+    # cur = con.cursor()
+
+    # cur.execute("SELECT SUM(sum_volume) FROM data WHERE year=2024 AND month=5 AND day=6")
+
+    # print(cur.fetchall())
+    # print(holiday_dates)
