@@ -38,14 +38,14 @@ def create_histogram(holiday: str, year:int) -> tuple[np.ndarray, np.ndarray, np
     sigma = 2  # Standard deviation
     density_heatmap = gaussian_filter(density_matrix, sigma=sigma)
 
-    # plt.imshow(density_matrix_smooth, origin="lower", extent=[min(longs), max(longs), min(lats), max(lats)], cmap="hot", aspect="auto")
-    # plt.colorbar(label="Traffic Density")
-    # plt.title("Extracted 2D Density Matrix from `density_mapbox`")
-    # plt.xlabel("Longitude")
-    # plt.ylabel("Latitude")
-    # ax = plt.gca()
-    # ax.set_aspect('equal', adjustable='box')
-    # plt.show()
+    plt.imshow(density_heatmap, origin="lower", extent=[min(longs), max(longs), min(lats), max(lats)], cmap="hot", aspect="auto")
+    plt.colorbar(label="Traffic Density")
+    plt.title("Extracted 2D Density Matrix from `density_mapbox`")
+    plt.xlabel("Longitude")
+    plt.ylabel("Latitude")
+    ax = plt.gca()
+    ax.set_aspect('equal', adjustable='box')
+    plt.show()
     
 def pathfind(hist: np.ndarray, start: tuple[float, float], dest: tuple[float, float]): 
     pass

@@ -11,14 +11,32 @@
     filename='styles.css') }}"
     />
     {% block styles %}{% endblock %}
+    {{ bootstrap.load_css() }}
   </head>
   <body>
-    <nav>
-      <span>Pathfinder</span>
-      <h1>Holiday Traffic Tracker</h1>
-      <span>Statistics</span>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" id="home-link" href="/">Holiday Traffic Tracker</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" id="pathfinding-link" href="/pathfinding">Pathfinder</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="statistics-link" href="/statistics">Statistics</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="responses-link" href="/responses">Responses</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </nav>
-    <main>{% block content %} {% endblock %}</main>
+    <main class="container-fluid">{% block content %} {% endblock %}</main>
     {% block scripts %}{% endblock %}
+    {{ bootstrap.load_js() }}
   </body>
 </html>

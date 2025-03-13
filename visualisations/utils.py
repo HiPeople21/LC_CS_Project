@@ -45,5 +45,6 @@ for year in YEARS:
         for i, date in enumerate(full_dates):
             holiday_dates[year][date] = (dates[i].year, dates[i].month, dates[i].day)
     elif year == 2024:
+        dates = dates[0:3] + dates[4:7]
         for i, date in enumerate(partial_dates):
             holiday_dates[year][date] = (dates[i].year, dates[i].month, dates[i].day)

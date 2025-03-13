@@ -16,11 +16,7 @@ body {
 
 nav {
     font-family: "Kode Mono", sans-serif;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--secondary-color);
+    background-color: var(--secondary-color) !important;
     padding: 0 10px;
     line-height: 2em;
 }
@@ -35,5 +31,24 @@ nav h1 {
 }
 
 body {
-    background-color: var(--main-color);
+    background-color: var(--main-color) !important;
+}
+
+#intro {
+    margin-top: 1em;
+    background-color: var(--secondary-color) !important;
+    border-radius: 5px;
+    border: 2px solid black;
+    padding: 1em;
+}
+
+#hello {
+    margin-bottom: 1em;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#intro a {
+    color: orange;
 }

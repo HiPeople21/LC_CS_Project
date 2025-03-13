@@ -1,13 +1,13 @@
+from flask_bootstrap import Bootstrap5
 from flask import Flask, redirect, render_template
-
-from ..visualisations import generate_barchart, generate_heatmap
 
 app = Flask(__name__)
 
+bootstrap = Bootstrap5(app)
+
 @app.route("/")
 def index():
-    return redirect("/pathfinding")
-    # return render_template("index.html")
+    return render_template("index.html")
 
 @app.route("/pathfinding")
 def pathfinding():
@@ -16,6 +16,10 @@ def pathfinding():
 @app.route("/statistics")
 def statistics():
     return render_template("statistics.html")
+
+@app.route("/responses")
+def responses():
+    return render_template("responses.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
