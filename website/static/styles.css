@@ -16,7 +16,6 @@ body {
 
 nav {
     font-family: "Kode Mono", sans-serif;
-    background-color: var(--secondary-color) !important;
     padding: 0 10px;
     line-height: 2em;
 }
@@ -36,9 +35,6 @@ body {
 
 #intro {
     margin-top: 1em;
-    background-color: var(--secondary-color) !important;
-    border-radius: 5px;
-    border: 2px solid black;
     padding: 1em;
 }
 
@@ -51,4 +47,13 @@ body {
 
 #intro a {
     color: orange;
+}
+
+.black-border {
+    border-radius: 5px;
+    border: 2px solid black;
+}
+
+.lb-bg {
+    background-color: var(--secondary-color) !important;
 }
