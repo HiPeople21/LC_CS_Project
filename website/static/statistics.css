@@ -1,0 +1,66 @@
+.chart-title {
+    color: white;
+}
+
+.form-button {
+    width: 100%;
+}
+
+form {
+    padding: 1em;
+}
+
+form label {
+    color: var(--accent-color);
+    font-size: 1.5em;
+}
+
+#bar-info,
+#heatmap-info {
+    width: 25%;
+}
+
+
+#bar-area,
+#heatmap-area {
+    margin: 1em;
+}
+
+#bar-area,
+#heatmap-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#barchart,
+#heatmap {
+    width: 70%;
+}
+
+#bar-select,
+#heatmap-select {
+    margin-top: 2em;
+}
+
+#bar-area {
+    margin-bottom: 3em;
+}
+
+@media only screen and (max-width: 600px) {
+    #bar-area,
+    #heatmap-area {
+        flex-direction: column;
+    }
+
+    #barchart,
+    #heatmap,
+    #bar-info,
+    #heatmap-info {
+        width: 100%;
+    }
+    #barchart,
+    #heatmap {
+        height: 80vh;
+    }
+}

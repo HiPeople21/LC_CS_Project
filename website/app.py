@@ -1,5 +1,7 @@
 from flask_bootstrap import Bootstrap5
-from flask import Flask, redirect, render_template
+from flask import Flask, render_template, request
+
+from .utils import BASE
 
 app = Flask(__name__)
 
@@ -9,7 +11,7 @@ bootstrap = Bootstrap5(app)
 def index():
     return render_template("index.html")
 
-@app.route("/pathfinding")
+@app.route("/pathfinding", methods=["GET", "POST"])
 def pathfinding():
     return render_template("pathfinding.html")
 

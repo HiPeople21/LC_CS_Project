@@ -41,7 +41,8 @@ def generate_heatmap(holiday: str, year: int):
     
 
     # Creates file
-    path = BASE / f"charts/heatmap/{holiday}-{year}.html"
+    path = BASE.parent / f"website/static/charts/heatmap/{holiday}-{year}.html"
+    
     file = open(path, "a+")
     file.close()
     
@@ -103,10 +104,10 @@ def generate_barchart(holiday: str):
             )
         )
     
-    path = BASE / f"charts/bar/{holiday}.html"
+    path = BASE.parent / f"website/static/charts/bar/{holiday}.html"
     
     # Creates file
-    file = open(path, "a+")
+    file = open(path, "w+")
     file.close()
     
     fig.write_html(path, full_html=False)
@@ -121,6 +122,7 @@ if __name__ == "__main__":
                 generate_heatmap(date, year)
     for date in full_dates:
         generate_barchart(date)
+    
     # con = sqlite3.connect(DB_FILE)
     # cur = con.cursor()
 
