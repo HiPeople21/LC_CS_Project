@@ -85,8 +85,8 @@ def calculate_and_show_percentage() -> None:
         
 
 if __name__ == '__main__':
-    # filter_data()
-    # calculate_and_show_percentage()
+    filter_data()
+    calculate_and_show_percentage()
         
     with open(BASE / "info.txt", "r") as f:
         t = 0
