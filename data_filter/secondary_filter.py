@@ -4,7 +4,7 @@ import sqlite3
 
 from pathlib import Path
 
-from utils import BASE, generate_holiday_dates, get_site_data, MISSING_DATA, MONTHS, YEARS
+from .utils import BASE, generate_holiday_dates, get_site_data, MISSING_DATA, MONTHS, YEARS
 
 DB_FILE = BASE / "database.db"
 
@@ -12,11 +12,15 @@ def secondary_filter() -> None:
     """
     Reads CSV files and compiles data together by site instead of having separate data for each detector
     """
+    # Gets site data
     site_data = get_site_data()
     data = {}
+    
+    # Gets site IDs
     site_ids = [site["SiteID"] for site in site_data]
     site_ids_needed = set()
     for year in YEARS:
+        # Gets holiday dates
         dates = generate_holiday_dates(year)
         months = {date.month for date in dates}
         files = [f"SCATS{MONTHS[month]}{year}.csv" for month in months]
@@ -27,6 +31,7 @@ def secondary_filter() -> None:
                 BASE / "output_data/2024/SCATSDecember2024.csv"
             ]:
                 continue
+            # Reads from file
             with open(path, "r", encoding="utf-8") as f:
                 reader = csv.DictReader(f)
                 for row in reader:
@@ -39,19 +44,24 @@ def secondary_filter() -> None:
                         else:
                             data[data_key] = row.copy()
                             data[data_key]["Sum_Volume"] = int(row["Sum_Volume"])
-            print(file)
-    print(len(data))
-    # write_data_to_sql(data, DB_FILE)
-    # write_sites_to_sql(site_data, DB_FILE, site_ids_needed)
+    #         print(file)
+    # print(len(data))
+    
+    
+    # Writes data to SQL files
+    write_data_to_sql(data, DB_FILE)
+    write_sites_to_sql(site_data, DB_FILE, site_ids_needed)
 
 def display_data_with_sites() -> None:
     """
     Reads CSV files and shows how many rows are usable within each csv file
     """
+    # Gets site data
     site_data = get_site_data()
     site_ids = [site["SiteID"] for site in site_data]
     total = 0
     for year in YEARS:
+        # Generates holiday dates
         dates = generate_holiday_dates(year)
         months = {date.month for date in dates}
         files = [f"SCATS{MONTHS[month]}{year}.csv" for month in months]
@@ -62,6 +72,7 @@ def display_data_with_sites() -> None:
                 BASE / "output_data/2024/SCATSDecember2024.csv"
             ]:
                 continue
+            # Reads from file
             with open(path, "r", encoding="utf-8") as f:
                 reader = csv.DictReader(f)
                 number = 0
@@ -193,9 +204,9 @@ if __name__ == "__main__":
     # secondary_filter()
     # print(get_site_data())
     # create_tables(DB_FILE)
-    # con = sqlite3.connect(DB_FILE)
-    # cursor = con.cursor()
-    # cursor.execute("SELECT * FROM data LIMIT 5;")
-    # print(cursor.fetchall())
+    con = sqlite3.connect(DB_FILE)
+    cursor = con.cursor()
+    cursor.execute("SELECT DISTINCT minute FROM data WHERE year = 2020 AND day = 1 AND month = 1;")
+    print(cursor.fetchall())
     # display_data_with_sites()
     pass

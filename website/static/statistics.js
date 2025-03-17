@@ -2,14 +2,16 @@ const barForm = document.querySelector("#bar-form");
 const barSelectHoliday = document.querySelector("#bar-select-holiday");
 const barChart = document.querySelector("#barchart");
 
+// Changes iframe source to display bar chart
 async function changeBar() {
     const holiday = barSelectHoliday.value;
     barChart.src = `/static/charts/bar/${holiday}.html`
 }
 
+// Changes bar chart when form is submitted
 barForm.addEventListener("submit", async e => {
     e.preventDefault();
-    await changeBar(); 
+    await changeBar();
 });
 
 
@@ -44,6 +46,7 @@ for (const date of missingDates) {
     missingDateOptions.push(document.querySelectorAll(`option[value="${date}"]`)[1]);
 }
 
+// Changes iframe source to display heatmap
 async function changeHeatmap() {
     const holiday = heatmapSelectHoliday.value;
     const year = heatmapSelectYear.value;
@@ -51,11 +54,15 @@ async function changeHeatmap() {
     heatmap.src = `/static/charts/heatmap/${holiday}-${year}.html`
 }
 
+
+// Changes heatmap when form is submitted
 heatmapForm.addEventListener("submit", async e => {
     e.preventDefault();
-    await changeHeatmap(); 
+    await changeHeatmap();
 });
 
+
+// Disables missing dates for 2024
 heatmapSelectYear.addEventListener("change", e => {
     const year = e.target.value;
     if (year === "2024") {

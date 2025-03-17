@@ -51,9 +51,23 @@ body {
 
 .black-border {
     border-radius: 5px;
-    border: 2px solid black;
+    border: 3.5px solid black;
 }
 
 .lb-bg {
     background-color: var(--secondary-color) !important;
+}
+
+form {
+    padding: 1em;
+}
+
+form label {
+    color: var(--accent-color);
+    font-size: 1.5em;
+}
+
+
+.form-button {
+    width: 100%;
 }
