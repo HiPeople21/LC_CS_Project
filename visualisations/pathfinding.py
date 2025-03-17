@@ -148,48 +148,49 @@ def pathfind(hist: np.ndarray, x_edges: np.ndarray, y_edges: np.ndarray, start: 
     return []
     
 if __name__ == "__main__":
-    for year in YEARS:
-        if year == 2024:
-            for date in partial_dates:
-                hist, x_edges, y_edges = create_histogram(date, year)
-                # print(x_edges, y_edges)
-                # print(hist.shape)
-                # print(hist[98])
+    pass
+    # for year in YEARS:
+    #     if year == 2024:
+    #         for date in partial_dates:
+    #             hist, x_edges, y_edges = create_histogram(date, year)
+    #             # print(x_edges, y_edges)
+    #             # print(hist.shape)
+    #             # print(hist[98])
                 
-                path = pathfind(hist, x_edges, y_edges, (-6.33, 53.32), (-6.21, 53.37))
-                # print(path)
-                plt.imshow(hist, origin="lower", cmap="hot", aspect="auto")
-                plt.colorbar(label="Traffic Density")
-                plt.title(f"{date} {year}")
-                plt.xlabel("Longitude")
-                plt.ylabel("Latitude")
-                ax = plt.gca()
-                ax.set_aspect('equal', adjustable='box')
+    #             path = pathfind(hist, x_edges, y_edges, (-6.33, 53.32), (-6.21, 53.37))
+    #             # print(path)
+    #             plt.imshow(hist, origin="lower", cmap="hot", aspect="auto")
+    #             plt.colorbar(label="Traffic Density")
+    #             plt.title(f"{date} {year}")
+    #             plt.xlabel("Longitude")
+    #             plt.ylabel("Latitude")
+    #             ax = plt.gca()
+    #             ax.set_aspect('equal', adjustable='box')
                 
-                path_x = [p[1] for p in path]  # Extract x-coordinates (longitude)
-                path_y = [p[0] for p in path]  # Extract y-coordinates (latitude)
-                plt.plot(path_x, path_y, 'b-', label='Path')  # Plot the path with blue circles and lines
-                # print(path)
-                plt.show()
-        else:
-            for date in full_dates:
-                hist, x_edges, y_edges = create_histogram(date, year)
-                # print(x_edges, y_edges)
-                # print(hist.shape)
-                # print(hist[98])
+    #             path_x = [p[1] for p in path]  # Extract x-coordinates (longitude)
+    #             path_y = [p[0] for p in path]  # Extract y-coordinates (latitude)
+    #             plt.plot(path_x, path_y, 'b-', label='Path')  # Plot the path with blue circles and lines
+    #             # print(path)
+    #             plt.show()
+    #     else:
+    #         for date in full_dates:
+    #             hist, x_edges, y_edges = create_histogram(date, year)
+    #             # print(x_edges, y_edges)
+    #             # print(hist.shape)
+    #             # print(hist[98])
                 
-                path = pathfind(hist, x_edges, y_edges, (-6.33, 53.32), (-6.21, 53.37))
-                # print(path)
-                plt.imshow(hist, origin="lower", cmap="hot", aspect="auto")
-                plt.colorbar(label="Traffic Density")
-                plt.title(f"{date} {year}")
-                plt.xlabel("Longitude")
-                plt.ylabel("Latitude")
-                ax = plt.gca()
-                ax.set_aspect('equal', adjustable='box')
+    #             path = pathfind(hist, x_edges, y_edges, (-6.33, 53.32), (-6.21, 53.37))
+    #             # print(path)
+    #             plt.imshow(hist, origin="lower", cmap="hot", aspect="auto")
+    #             plt.colorbar(label="Traffic Density")
+    #             plt.title(f"{date} {year}")
+    #             plt.xlabel("Longitude")
+    #             plt.ylabel("Latitude")
+    #             ax = plt.gca()
+    #             ax.set_aspect('equal', adjustable='box')
                 
-                path_x = [p[1] for p in path]  # Extract x-coordinates (longitude)
-                path_y = [p[0] for p in path]  # Extract y-coordinates (latitude)
-                plt.plot(path_x, path_y, 'b-', label='Path')  # Plot the path with blue circles and lines
-                # print(path)
-                plt.show()
+    #             path_x = [p[1] for p in path]  # Extract x-coordinates (longitude)
+    #             path_y = [p[0] for p in path]  # Extract y-coordinates (latitude)
+    #             plt.plot(path_x, path_y, 'b-', label='Path')  # Plot the path with blue circles and lines
+    #             # print(path)
+    #             plt.show()

@@ -200,13 +200,12 @@ def create_tables(file:str|Path) -> None:
     con.close()
 
 if __name__ == "__main__":
-    # create_tables(DB_FILE)
-    # secondary_filter()
+    create_tables(DB_FILE)
+    secondary_filter()
     # print(get_site_data())
     # create_tables(DB_FILE)
-    con = sqlite3.connect(DB_FILE)
-    cursor = con.cursor()
-    cursor.execute("SELECT DISTINCT minute FROM data WHERE year = 2020 AND day = 1 AND month = 1;")
-    print(cursor.fetchall())
+    # con = sqlite3.connect(DB_FILE)
+    # cursor = con.cursor()
+    # cursor.execute("SELECT DISTINCT minute FROM data WHERE year = 2020 AND day = 1 AND month = 1;")
+    # print(cursor.fetchall())
     # display_data_with_sites()
-    pass

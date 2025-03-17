@@ -59,10 +59,10 @@ def create_db(file: str|Path):
     con.close()
 
 if __name__ == "__main__":
-    # create_db(RESPONSES_DB)
-    con = sqlite3.connect(RESPONSES_DB)
-    cur = con.cursor()
-    cur.execute("SELECT * FROM responses")
-    print(cur.fetchall())
-    con.commit()
-    con.close()
+    create_db(RESPONSES_DB)
+    # con = sqlite3.connect(RESPONSES_DB)
+    # cur = con.cursor()
+    # cur.execute("SELECT * FROM responses")
+    # print(cur.fetchall())
+    # con.commit()
+    # con.close()
