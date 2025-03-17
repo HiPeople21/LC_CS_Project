@@ -10,10 +10,21 @@
       href="{{ url_for('static',
     filename='styles.css') }}"
     />
-    {% block styles %}{% endblock %} {{ bootstrap.load_css() }}
+    {% block styles %}{% endblock %} 
 
-    <script src="{{ url_for('static',
-    filename='node_modules/plotly.js-dist/plotly.js') }}"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{{ url_for('static',
+    filename='node_modules/bootstrap/dist/css/bootstrap.min.css') }}"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{{ url_for('static',
+    filename='node_modules/leaflet/dist/leaflet.css') }}"
+    />
+
   </head>
   <body>
     <nav class="navbar navbar-expand-lg lb-bg">
@@ -54,6 +65,17 @@
       </div>
     </nav>
     <main class="container-fluid">{% block content %} {% endblock %}</main>
-    {% block scripts %}{% endblock %} {{ bootstrap.load_js() }}
+    <script src="{{ url_for('static',
+    filename='node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',
+    filename='node_modules/plotly.js-dist/plotly.js') }}"></script>
+    <script src="{{ url_for('static',
+    filename='node_modules/leaflet/dist/leaflet.js') }}"></script>
+    <script src="{{ url_for('static',
+    filename='node_modules/heatmap.js/build/heatmap.min.js') }}"></script>
+    <script src="{{ url_for('static',
+    filename='node_modules/heatmap.js/plugins/leaflet-heatmap/leaflet-heatmap.js') }}"></script>
+    
+    {% block scripts %}{% endblock %} 
   </body>
 </html>

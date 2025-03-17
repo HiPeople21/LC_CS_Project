@@ -16,7 +16,8 @@ def filter_data() -> None:
         # Creates folder is it doesn't exist
         if not folder_path.is_dir():
             folder_path.mkdir(parents=True, exist_ok=True)
-            
+        
+        # Generates holiday dates for the year
         dates = generate_holiday_dates(year)
         months = {date.month for date in dates}
         
@@ -31,10 +32,14 @@ def filter_data() -> None:
                 continue
             elif path in MISSING_DATA:
                 continue
+            
+            # Reads data
             with open(path, "r", encoding="utf-8-sig") as f:
                 reader = csv.reader(f)
                 headers = next(reader)
                 output_file = BASE / f"output_data/{year}" / file
+                
+                # Writes data
                 with open(output_file, "w", encoding="utf-8", newline='') as output_f:
                     writer = csv.writer(output_f)
                     writer.writerow(headers[1:] + ["Year", "Month", "Day", "Hour", "Minute", "Second"])
@@ -42,6 +47,7 @@ def filter_data() -> None:
                     for row in reader:
                         date = parse_date(row[0], year)
                         if date[:3] in dates:
+                            # Removes the unneeded date column and replaces it with the separated fields
                             writer.writerow(row[1:] + date)
                             length += 1
                 print(output_file, length)
@@ -52,6 +58,7 @@ def calculate_and_show_percentage() -> None:
     Calculates and shows what percentage of rows were kept
     """
     for year in YEARS:
+        # Generates holiday dates for the year
         dates = generate_holiday_dates(year)
         months = {date.month for date in dates}
         
@@ -63,11 +70,13 @@ def calculate_and_show_percentage() -> None:
                 continue
             elif path in MISSING_DATA:
                 continue
+            # Reads from file
             with open(path, "r", encoding="utf-8-sig") as f:
                 reader = csv.reader(f)
                 headers = next(reader)
                 total_rows = sum(1 for _ in reader)
                 output_file = BASE / f"output_data/{year}" / file
+                # Reads from corresponding file
                 with open(output_file, "r", encoding="utf-8") as output_f:
                     reader2 = csv.reader(output_f)
                     headers = next(reader2)

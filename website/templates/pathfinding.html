@@ -1,6 +1,79 @@
 {% extends "base.html" %} {% block title %}: Pathfinding{% endblock %} {% block
 content %}
 <section id="pathfinding-content">
-  <form action="/pathfind" method="POST"></form>
+  <div id="pathfind-forms" class="black-border lb-bg">
+    <form id="heatmap-form">
+      <div class="mb-3">
+        <label for="heatmap-select-holiday" class="form-label">Holiday</label>
+        <select
+          class="form-select"
+          id="heatmap-select-holiday"
+          aria-label="Heatmap Select"
+        >
+          <option value="New Year's Day" selected>New Year's Day</option>
+          <option value="St Brigid's Day">St Brigid's Day</option>
+          <option value="St Patrick's Day">St Patrick's Day</option>
+          <option value="Easter Monday">Easter Monday</option>
+          <option value="May Bank holiday">May Bank holiday</option>
+          <option value="June Bank Holiday">June Bank Holiday</option>
+          <option value="August Bank Holiday">August Bank Holiday</option>
+          <option value="October Bank Holiday">October Bank Holiday</option>
+          <option value="Christmas Day">Christmas Day</option>
+          <option value="St Stephen's Day">St Stephen's Day</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="heatmap-start-time" class="form-label">Start Time</label>
+        <input type="range" class="form-range" min="0" max="23" step="1" id="heatmap-start-time" value="0">
+        <span id="start-time-display">0:00</span>
+      </div>
+      <div class="mb-3">
+        <label for="heatmap-end-time" class="form-label">End Time</label>
+        <input type="range" class="form-range" min="0" max="23" step="1" id="heatmap-end-time" value="23">
+        <span id="end-time-display">23:00</span>
+      </div>
+
+      <button type="submit" class="btn btn-dark form-button">Get Heatmap</button>
+    </form>
+    <form id="pathfind-form">
+      <div class="mb-3">
+        <label class="form-label">Start Location</label>
+        <div class="input-group">
+          <input type="text" aria-label="Latitude" placeholder="Latitude" class="form-control" id="start-latitude" required>
+          <input type="text" aria-label="Longitude" placeholder="Longitude" class="form-control" id="start-longitude" required>
+        </div>
+        <button class="btn btn-secondary form-button" id="find-start-location">Find On Map</button>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Destination</label>
+        <div class="input-group">
+          <input type="text" aria-label="Latitude" placeholder="Latitude" class="form-control" id="destination-latitude" required>
+          <input type="text" aria-label="Longitude" placeholder="Longitude" class="form-control" id="destination-longitude" required>
+        </div>
+        <button class="btn btn-secondary form-button" id="find-destination">Find On Map</button>
+      </div>
+
+      <button type="submit" class="btn btn-dark form-button">Pathfind</button>
+    </form>
+    <div id="feedback-area">
+      <h3>Was This Helpful?</h3>
+      <div id="feedback-buttons">
+        <button id="feedback-yes">Yes</button>
+        <button id="feedback-no">No</button>
+      </div>
+      <span>Note: Clicking one of these options submits the filter options. Submissions can be viewed in the statistics page.</span>
+    </div>
+  </div>
+  <div id="map-canvas" class="black-border lb-bg"></div>
 </section>
+{% endblock %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static',
+    filename='pathfinding.css') }}"
+/>
+{% endblock %} {% block scripts %}
+<script src="{{ url_for('static',
+    filename='pathfinding.js') }}"></script>
 {% endblock %}

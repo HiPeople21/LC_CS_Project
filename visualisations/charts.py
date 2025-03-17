@@ -11,6 +11,7 @@ def generate_heatmap(holiday: str, year: int):
         holiday (str): Holiday to search for
         year (int): Year to search for
     """
+    # Gets data
     date = holiday_dates[year][holiday]
     con = sqlite3.connect(DB_FILE)
     cur = con.cursor()
@@ -24,6 +25,7 @@ def generate_heatmap(holiday: str, year: int):
         lats.append(lat)
         longs.append(long)
 
+    # Creates figure
     fig = px.density_map(
         {
             "Latitude": lats,
@@ -59,6 +61,7 @@ def generate_barchart(holiday: str):
     Args:
         holiday (str): Holiday to search for
     """
+    # Gets data
     dates = []
     for year in YEARS:
         if holiday in missing_dates and year == 2024:
@@ -75,6 +78,7 @@ def generate_barchart(holiday: str):
         cur.execute("SELECT SUM(sum_volume) FROM data WHERE year=? AND month=? AND day=?", (date[0], date[1], date[2]))
         data.append(cur.fetchall()[0][0])
     
+    # Creates figure
     if holiday in missing_dates:
         fig = px.bar(
             {
