@@ -39,9 +39,67 @@ Week 4:
 Week 5:
 - Finished second data cleaning (approx 650k rows now)
 
+Week 6:
+- Worked on website
+
+Week 7:
+- Worked on website
+
+Week 8:
+- Worked on barchart
+
+Week 9:
+- Worked on heatmap
+
+Week 10:
+- Rewrote visuals in plotly
+- Worked on pathfinding
+
+Week 11:
+- Finished website
+
+
 ## 5. Evaluation
 
 ## 6. References
+Technologies:
+- [Python](https://www.python.org/): Main programming language I used
+- [HTML](https://en.wikipedia.org/wiki/HTML), [CSS](https://en.wikipedia.org/wiki/Cascading_Style_Sheets), [JavaScript](https://en.wikipedia.org/wiki/JavaScript): Used to build website frontend
+- [GitHub](https://github.com/): Hosts git repositories
+- [Git](https://git-scm.com/): Version control tool
+- [pip](https://pypi.org/project/pip/): Used to download Python modules/libraries/frameworks
+- [npm](https://www.npmjs.com/): Used to download JS modules/libraries/frameworks
+- [SQLite](https://www.sqlite.org/): Database used
+- [VsCode](https://code.visualstudio.com/): Code editor
+- [Figma](https://www.figma.com/): Used for wireframes and flowcharts
+
+Python modules/libraries/frameworks:
+- [Flask](https://flask.palletsprojects.com/en/stable/): Server
+- [Plotly](https://plotly.com/): Visualisations
+- [Matplotlib](https://matplotlib.org/): Originally used for visualisations
+- [Aiosqlite](https://pypi.org/project/aiosqlite/): Asynchronous version of sqlite3
+- [Numpy](https://numpy.org/): Mathematical analysis
+- [Scipy](https://scipy.org/): Histogram and other mathematical tools
+- [Waitress](https://pypi.org/project/waitress/): Used to run server
+
+HTML, CSS, JavaScript modules/libraries/frameworks:
+- [Bootstrap](https://getbootstrap.com/): Frontend components/styling tools
+- [Leaflet](https://leafletjs.com/): Map to be used in pathfinding
+- [Heatmap.js](https://www.patrick-wied.at/static/heatmapjs/): Heatmap to be overlayed on Leaflet map
+- [Kode Mono](https://fonts.google.com/specimen/Kode+Mono): Font used in navbar
+
+Other:
+- [Google](https://www.google.ie/): Search engine used
+- [Stackoverflow](https://stackoverflow.com/): Problems to issues I had
+- [Python Docs](https://docs.python.org/3/): Standard library docs
+- [Mozilla Docs](https://developer.mozilla.org/en-US/): CSS, JS docs
+- [W3 Schools](https://www.w3schools.com/): Code examples
+- [GeeksForGeeks](https://www.geeksforgeeks.org/): Code examples
+
+Existing Solutions:
+- [Nutrition Value](https://www.nutritionvalue.org/nutritioncalculator.php)
+- [BettingPros](https://www.bettingpros.com/nba/picks/prop-bets/)
+- [Google Maps](https://www.google.com/maps)
 
 ## 7. Summary Word Count
 
