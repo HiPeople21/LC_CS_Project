@@ -29,7 +29,7 @@ After looking into the SDCC traffic congestion database, I found the SCATS traff
 - Christmas Day
 - St Stephen's Day
 
-This now meant that my target demographic shifted a bit, to people who would commute during holidays, which targets tourists more as well. However the data I had is still just a portion of Dublin, mostly within the M50.
+This now meant that my target demographic shifted a bit, to people who would commute during holidays, which targets tourists more as well. However the data I had is still just for a portion of Dublin, mostly within the M50.
 
 ## 3. Plan and Design
 
