@@ -32,7 +32,13 @@ After looking into the SDCC traffic congestion database, I found the SCATS traff
 This now meant that my target demographic shifted a bit, to people who would commute during holidays, which targets tourists more as well. However the data I had is still just for a portion of Dublin, mostly within the M50.
 
 ## 3. Plan and Design
+I plan to have a website with 4 pages as the web interface, which will be a home page, pathfinding page, statistics page, and responses page. 
 
+Below I will list out the requirements and how my project met them.
+
+### Basic Requirements (BRs):
+1. I selected my datasets, which can be seens in the references. I had them saved in `Artefact/data_filter/data`, inside which thet are sorted by years, and follow the naming scheme `SCATS{month}{year}.csv`. An example of one such file is `Artefact/data_filter/data/2020/SCATSJanuary2020.csv`. The files `Artefact/data_filter/data_filter` and `Artefact/data_filter/secondary_filter` are files which are run in that order to filter and clean the data. After running `Artefact/data_filter/data_filter`, the data will be filtered and cleaned to be stored in `Artefact/data_filter/output_data`, within which has the same structure as `Artefact/data_filter/data`. This stores the data of only the dates I will use, with a reformatted time (separated into year, month, day, hour, minute, second). After running `Artefact/data_filter/secondary_filter`, the data is summed up by site (the data is separated by multiple sensors at each site) and stored up in the SQL file `Artefact/data_filter/database.db`.
+2. 
 
 ## 4. Create
 ### Log
@@ -76,6 +82,7 @@ Week 11:
 
 
 ## 5. Evaluation
+I believe
 
 ## 6. References
 Technologies:
