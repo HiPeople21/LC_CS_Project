@@ -54,15 +54,15 @@ def create_db(file: str|Path):
     """Creates the responses database"""
     con = sqlite3.connect(file)
     cur = con.cursor()
-    cur.execute("CREATE TABLE responses (id INTEGER PRIMARY KEY, submission_time TEXT, holiday TEXT, time_range TEXT, start_location TEXT, destination TEXT, helpful BOOl)")
+    cur.execute("CREATE TABLE responses (id INTEGER PRIMARY KEY, submission_time TEXT, holiday TEXT, start_time INTEGER, end_time INTEGER, start_latitude REAL, start_longitude REAL, destination_latitude REAL, destination_longitude REAL, helpful BOOL)")
     con.commit()
     con.close()
 
 if __name__ == "__main__":
-    create_db(RESPONSES_DB)
-    # con = sqlite3.connect(RESPONSES_DB)
-    # cur = con.cursor()
-    # cur.execute("SELECT * FROM responses")
-    # print(cur.fetchall())
-    # con.commit()
-    # con.close()
+    # create_db(RESPONSES_DB)
+    con = sqlite3.connect(RESPONSES_DB)
+    cur = con.cursor()
+    cur.execute("SELECT sql FROM sqlite_schema;")
+    print(cur.fetchall())
+    con.commit()
+    con.close()

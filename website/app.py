@@ -4,7 +4,7 @@ import numpy as np
 from flask import Flask, render_template, request
 
 from ..visualisations import create_histogram, pathfind
-from .utils import BASE, DB_FILE, holiday_dates, RESPONSES_DB, YEARS
+from .utils import DB_FILE, holiday_dates, RESPONSES_DB, YEARS
 
 app = Flask(__name__)
 
@@ -101,7 +101,7 @@ async def feedback():
         con = await aiosqlite.connect(RESPONSES_DB)
         cur = await con.cursor()
         
-        await cur.execute("INSERT INTO responses (submission_time, holiday, time_range, start_location, destination, helpful) VALUES (?, ?, ?, ?, ?, ?)", (submit_time, holiday, f"{start_time}:00-{end_time}:00", str(start_location), str(end_location), helpful))
+        await cur.execute("INSERT INTO responses (submission_time, holiday, start_time, end_time, start_latitude, start_longitude, destination_latitude, destination_longitude, helpful) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (submit_time, holiday, start_time, end_time, start_location[0], start_location[1], end_location[0], end_location[1], helpful))
         await con.commit()
         return {"status": "success", "message": ""}
     except Exception as e:
