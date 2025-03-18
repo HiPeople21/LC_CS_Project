@@ -1,0 +1,94 @@
+{% extends "base.html" %} {% block title %}: Statistics{% endblock %} {% block
+content %}
+<section id="bar-area">
+  <div id="bar-info">
+    <h2 class="chart-title">
+      Trend Of Total Traffic Volume For A Holiday Over The Past Few Years
+    </h2>
+    <div id="bar-select" class="black-border lb-bg">
+      <form id="bar-form">
+        <div class="mb-3">
+          <label for="bar-select-holiday" class="form-label">Holiday</label>
+          <select
+            class="form-select"
+            id="bar-select-holiday"
+            aria-label="Barchart Select"
+          >
+            <option value="New Year's Day" selected>New Year's Day</option>
+            <option value="St Brigid's Day">St Brigid's Day</option>
+            <option value="St Patrick's Day">St Patrick's Day</option>
+            <option value="Easter Monday">Easter Monday</option>
+            <option value="May Bank holiday">May Bank holiday</option>
+            <option value="June Bank Holiday">June Bank Holiday</option>
+            <option value="August Bank Holiday">August Bank Holiday</option>
+            <option value="October Bank Holiday">October Bank Holiday</option>
+            <option value="Christmas Day">Christmas Day</option>
+            <option value="St Stephen's Day">St Stephen's Day</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-dark form-button">Submit</button>
+      </form>
+    </div>
+  </div>
+  <iframe id="barchart" src="{{ url_for('static',
+    filename="charts/bar/New Year's Day.html") }}" title="Barchart"></iframe>
+</section>
+<section id="heatmap-area">
+  <div id="heatmap-info">
+    <h2 class="chart-title">
+      Traffic Density Heatmap For A Holiday In A Given Year
+    </h2>
+
+    <div id="heatmap-select" class="black-border lb-bg">
+      <form id="heatmap-form">
+        <div class="mb-3">
+            <label for="heatmap-select-holiday" class="form-label">Holiday</label>
+            <select
+              class="form-select"
+              id="heatmap-select-holiday"
+              aria-label="Heatmap Select"
+            >
+              <option value="New Year's Day" selected>New Year's Day</option>
+              <option value="St Brigid's Day">St Brigid's Day</option>
+              <option value="St Patrick's Day">St Patrick's Day</option>
+              <option value="Easter Monday">Easter Monday</option>
+              <option value="May Bank holiday">May Bank holiday</option>
+              <option value="June Bank Holiday">June Bank Holiday</option>
+              <option value="August Bank Holiday">August Bank Holiday</option>
+              <option value="October Bank Holiday">October Bank Holiday</option>
+              <option value="Christmas Day">Christmas Day</option>
+              <option value="St Stephen's Day">St Stephen's Day</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="heatmap-select-year" class="form-label">Year</label>
+            <select
+              class="form-select"
+              id="heatmap-select-year"
+              aria-label="Heatmap Select"
+            >
+              <option value="2020" selected>2020</option>
+              <option value="2021">2021</option>
+              <option value="2022">2022</option>
+              <option value="2023">2023</option>
+              <option value="2024">2024</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-dark form-button">Submit</button>
+      </form>
+    </div>
+  </div>
+  <iframe id="heatmap" src="{{ url_for('static',
+    filename="charts/heatmap/New Year's Day-2020.html") }}" title="Heatmap"></iframe>
+</section>
+
+{% endblock %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static',
+    filename='statistics.css') }}"
+/>
+{% endblock %} {% block scripts %}
+<script src="{{ url_for('static',
+    filename='statistics.js') }}"></script>
+{% endblock %}
