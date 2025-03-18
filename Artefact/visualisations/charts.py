@@ -45,7 +45,7 @@ def generate_heatmap(holiday: str, year: int):
     # Creates file
     path = BASE.parent / f"website/static/charts/heatmap/{holiday}-{year}.html"
     
-    file = open(path, "a+")
+    file = open(path, "w+")
     file.close()
     
     # Saves figure and prevents zooming as the point radii don't scale with zoom
