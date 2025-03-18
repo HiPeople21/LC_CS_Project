@@ -59,7 +59,7 @@ def create_db(file: str|Path):
     con.close()
 
 if __name__ == "__main__":
-    print(holiday_dates)
+    # print(holiday_dates)
     create_db(RESPONSES_DB)
     # con = sqlite3.connect(RESPONSES_DB)
     # cur = con.cursor()
