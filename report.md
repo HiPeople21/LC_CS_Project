@@ -37,8 +37,14 @@ I plan to have a website with 4 pages as the web interface, which will be a home
 Below I will list out the requirements and how my project met them.
 
 ### Basic Requirements (BRs):
-1. I selected my datasets, which can be seens in the references. I had them saved in `Artefact/data_filter/data`, inside which thet are sorted by years, and follow the naming scheme `SCATS{month}{year}.csv`. An example of one such file is `Artefact/data_filter/data/2020/SCATSJanuary2020.csv`. The files `Artefact/data_filter/data_filter` and `Artefact/data_filter/secondary_filter` are files which are run in that order to filter and clean the data. After running `Artefact/data_filter/data_filter`, the data will be filtered and cleaned to be stored in `Artefact/data_filter/output_data`, within which has the same structure as `Artefact/data_filter/data`. This stores the data of only the dates I will use, with a reformatted time (separated into year, month, day, hour, minute, second). After running `Artefact/data_filter/secondary_filter`, the data is summed up by site (the data is separated by multiple sensors at each site) and stored up in the SQL file `Artefact/data_filter/database.db`.
-2. 
+1. I selected my datasets, which can be seens in the references. I planned to first narrow them down to only include the dates required, reformatting the time to separate column called `year`, `month`, `day`, `hour`, `minute`, and `second`. I then planned to put those values into an SQL file, with a many-to-one relationship with sites data. The files `Artefact/data_filter` contains the files `data_filter.py` and `secondary_filter.py`, which execute the above instructions.
+2. I planned to make 2 visualisations: a bar chart which consists of the total volume of traffic per year for each holiday, and a density heatmap of the traffic volume per holiday per year.
+3. I planned to have a Flask website to display all the visualisations I created.
+
+### Advanced Requirements (ARs):
+1. I planned to have a dropdown for the bar chart, where you could select a holiday and it'd display the total volume per year. I planned to have both a year and a holiday dropdown for the density heatmap, where it'd update the map according to the selected fields. I also planned to use Plotly as it'd allow for information to be displayed in a tooltip when hovered over. This would all be on the `Statistics` page.
+2. I planned to have a form which ties into the next AR. This form takes in the submission time, holiday, start time, end time, start co-ordinates, destination co-ordinates, and if they found it helpful or not. There are strings, integers, floats, and booleans data types gathered. It would be validates using JavaScript before being sent off to the server in a POST request using `fetch`. The responses will be displayed in a table on a `Responses` page.
+3. The form mentioned is on a `Pathfinding` page. Here there is a density heatmap of the average volume per site over the years for a specified holiday. You could them input co-ordinates or click on the heatmap to place points, which you can then pathfind between. I used the A* algorithm for this.
 
 ## 4. Create
 ### Log
@@ -80,6 +86,7 @@ Week 10:
 Week 11:
 - Finished website
 
+I had them saved in `Artefact/data_filter/data`, inside which thet are sorted by years, and follow the naming scheme `SCATS{month}{year}.csv`. An example of one such file is `Artefact/data_filter/data/2020/SCATSJanuary2020.csv`. The files `Artefact/data_filter/data_filter` and `Artefact/data_filter/secondary_filter` are files which are run in that order to filter and clean the data. After running `Artefact/data_filter/data_filter`, the data will be filtered and cleaned to be stored in `Artefact/data_filter/output_data`, within which has the same structure as `Artefact/data_filter/data`. This stores the data of only the dates I will use, with a reformatted time (separated into year, month, day, hour, minute, second). After running `Artefact/data_filter/secondary_filter`, the data is summed up by site (the data is separated by multiple sensors at each site) and stored up in the SQL file `Artefact/data_filter/database.db`.
 
 ## 5. Evaluation
 I believe
