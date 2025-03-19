@@ -188,6 +188,8 @@ Fourthly, I would have liked to be able to access road data, and suggest real ro
 
 Fifthly, I would have tweaked the pathfinding algorithm a bit, as currently the relationship between how much the distance and the volume affects it could be improved.
 
+Sixthly, in the `Pathfinding` page I forgot to join the markers to the path if the markers lay outside the heatmap area. I would go back and change this if I had more time.
+
 Lastly, given more time, I would have liked to make the mobile responsiveness of the website nicer, like in my wireframes. Unfortunately, I never really got around to improving them, and they remain as vertical versions of their desktop counterparts.
 
 ## 6. References
@@ -258,5 +260,5 @@ Datasets:
 | 2. Investigation       | 473          |
 | 3. Plan and Design     | 580          |
 | 4. Create              | 1021         |
-| 5. Evaluation          | 276          |
-| **Total:**             | 2384         |
+| 5. Evaluation          | 310          |
+| **Total:**             | 2418         |
