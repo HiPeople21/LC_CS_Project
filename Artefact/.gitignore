@@ -163,5 +163,6 @@ data_filter/data/
 data_filter/output_data/
 data_filter/dcc_traffic_signals_20221130.csv
 
-charts/
+charts/bar/*
+charts/heatmap/*
 node_modules/

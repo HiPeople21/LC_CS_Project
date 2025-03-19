@@ -7,11 +7,11 @@
   },
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "bootstrap": "^5.3.3",
     "heatmap.js": "^2.0.5",
     "leaflet": "^1.9.4",
     "plotly.js-dist": "^3.0.1"
-  }
+  },
+  "description": ""
 }
