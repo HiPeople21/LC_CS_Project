@@ -232,6 +232,7 @@ Other:
 - [W3 Schools](https://www.w3schools.com/): Code examples
 - [GeeksForGeeks](https://www.geeksforgeeks.org/): Code examples
 - [Citizens Information](https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/leave-and-holidays/public-holidays/): Dates for public holidays
+- [Markdown To HTML](https://markdowntohtml.com/): Used to convert my `report.md` to an `index.html` (I wrote my report in Markdown before turning it into HTML)
 
 Existing Solutions:
 - [Nutrition Value](https://www.nutritionvalue.org/nutritioncalculator.php)
