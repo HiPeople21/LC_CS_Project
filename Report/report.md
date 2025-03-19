@@ -3,7 +3,7 @@
 # Report
 
 ## 1. Meeting the Brief
-I have how I planned to meet each BR and AR in the **Plan and Design** section of the report. In the video I explained and demonstrated how the BRs and ARs were met.
+I have how I planned to meet each BR and AR in the **Plan and Design** section of the report. In the video I explained and demonstrated how the BRs and ARs were met. I will note that `README.md` was changed after this video was filmed.
 
 ## 2. Investigation
 I researched 3 scenarios to complete this project around. The first one was a nutrition calculator, where you could input certain conditions you would want (e.g. x grams or less of salt). The second idea was an NBA stat predictor. The last idea was a traffic congestion analyser. The nutrition calculator would have been made for people who would like to find meals that suit their conditions. The NBA stat predictor would have been made for people who bet on NBA games, such as overs and unders for certain players. The traffic idea would have been made for people who drive or just commute in general.
@@ -256,9 +256,9 @@ Datasets:
 
 | Section                | Word Count   |
 | ---------------------- | ------------ |
-| 1. Meeting the brief   | 34 + (Video) |
+| 1. Meeting the brief   | 46 + (Video) |
 | 2. Investigation       | 473          |
 | 3. Plan and Design     | 580          |
 | 4. Create              | 1021         |
 | 5. Evaluation          | 310          |
-| **Total:**             | 2418         |
+| **Total:**             | 2430         |

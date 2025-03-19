@@ -1,0 +1,44 @@
+input start_latitude, start_longitude, end_latitude, end_longitude, heatmap_matrix, latitude_edges, longitude_edges
+
+set start_latitude to closest value from latitude_edges
+set start_longitude to closest value from longitude_edges
+
+set destination_latitude to closest value from latitude_edges
+set destination_longitude to closest value from longitude_edges
+
+set start_point to be a tuple of start_latitude and start_longitude
+set destination_point to be a tuple of destination_latitude and destination_longitude
+
+set came_from to be an empty dictionary
+set g_score to be a dictionary with keys as the points and all values to be infinity
+set g_score of start_point to 0
+
+set f_score to be a dictionary with keys as the points and all values to be infinity
+set f_score of start_point to be the Euclidean distance between it and the destination_point
+
+set open_set to contain tuple of the f_score of the start_point and the start_point itself
+
+while loop:
+	pop the smallest value from open_set, ordered by the f_scores
+	set current to popped off point
+
+	if the current is the desination_point:
+		retrace steps using came_from to form the path
+		return path
+
+	set neighbours to the neighbouring cells in the matrix (includes diagonal)
+	
+	for loop neighbours:
+		set neighbour to next element
+		
+		set tentative_g_score to the current element's g_score plus the weight (from the matrix) of the neighbour point
+		
+		if the tentative_g_score is less than the g_score of the neighbour:
+			set came_from of the key neighbour to the value current
+			set g_score of the neighbour to the tentative_g_score
+			set f_score of the neighbour to the g_score of the neighbout plus the Euclidean distance of the neighbour and the destination
+			if the neighbour is not in the open_set:	
+				push a tuple of the f_score of the neighbour and the neighbour onto the open_set
+
+return an empty list
+		

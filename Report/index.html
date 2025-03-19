@@ -10,6 +10,10 @@
   text-decoration: underline;
 }
 
+table {
+  border: 1px solid black;
+}
+
 th {
   border: 2px solid black;
 }
@@ -27,12 +31,25 @@ pre {
   color: white;
   padding: 0.5em;
 }
+
+img {
+  width: 100%;
+}
+
+video {
+  width: 80%;
+  margin: 0 10%;
+}
     </style>
   </head>
   <body>
     <h1 id="report">Report</h1>
 <h2 id="1-meeting-the-brief">1. Meeting the Brief</h2>
-<p>I have how I planned to meet each BR and AR in the <strong>Plan and Design</strong> section of the report. In the video I explained and demonstrated how the BRs and ARs were met.</p>
+<p>I have how I planned to meet each BR and AR in the <strong>Plan and Design</strong> section of the report. In the video I explained and demonstrated how the BRs and ARs were met. I will note that <code>README.md</code> was changed after this video was filmed.</p>
+<video controls>
+  <source src="./Draft4.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 <h2 id="2-investigation">2. Investigation</h2>
 <p>I researched 3 scenarios to complete this project around. The first one was a nutrition calculator, where you could input certain conditions you would want (e.g. x grams or less of salt). The second idea was an NBA stat predictor. The last idea was a traffic congestion analyser. The nutrition calculator would have been made for people who would like to find meals that suit their conditions. The NBA stat predictor would have been made for people who bet on NBA games, such as overs and unders for certain players. The traffic idea would have been made for people who drive or just commute in general.</p>
 <p>I decided to eliminate the nutrition calculator as one of my ideas first, as it was not a topic which I had any particular interest. I also decided that it may have been difficult to try come up with graphs for this idea (BR 2). Next, I eliminated the NBA stat predictor, as I thought the idea would be too computationally complex. This is because my idea for this project would be to analyse players&#39; performances with and against other players and teams, but also including trends from previous games. However, in this idea, I would have to compute the performances of said other players, as they would affect the original player. As a result I concluded that BR 2 would be very difficult for this idea. This left me with the traffic idea. This idea appealed to me as I had worked on geographical data in the past (population within Dublin) and I had to create a visualisation for that, so I knew I would be more able to do this idea. I did research into existing solutions and provided on example for each of my ideas in the references. Datasets I researched for each idea are also listed in the references.</p>
@@ -58,10 +75,10 @@ I want my project to be able to allow for start and destination points to be pic
 <li>The form mentioned is on a <code>Pathfinding</code> page. Here there is a density heatmap (made using Leaflet and heatmap.js) of the average volume per site over the years for a specified holiday. You could them input co-ordinates or click on the heatmap to place points, which you can then pathfind between. I plan to use the A* algorithm on the density heatmap matrix to generate the optimal path.</li>
 </ol>
 <p>Flowcharts for the overall pathfinding process, data filtering and cleaning, and chart creation is below.
-<img src="/flowcharts.png" alt="Flowcharts"></p>
+<img src="./flowcharts.png" alt="Flowcharts"></p>
 <p>Wireframes for the  <code>Pathfinding</code> and <code>Statistics</code> page below (originally I only planned to have these 2 pages, but soon after I decided to change the structure).
-<img src="/wireframe-pathfinding.png" alt="Wireframe for pathfinding page">
-<img src="/wireframe-statistics.png" alt="Wireframe for statistics page"></p>
+<img src="./wireframe-pathfinding.png" alt="Wireframe for pathfinding page">
+<img src="./wireframe-statistics.png" alt="Wireframe for statistics page"></p>
 <h2 id="4-create">4. Create</h2>
 <h3 id="log">Log</h3>
 <p>Week 1:</p>
@@ -378,7 +395,7 @@ This now meant that my target demographic shifted a bit, to people who would com
 <tbody>
 <tr>
 <td>1. Meeting the brief</td>
-<td>34 + (Video)</td>
+<td>46 + (Video)</td>
 </tr>
 <tr>
 <td>2. Investigation</td>
@@ -398,7 +415,7 @@ This now meant that my target demographic shifted a bit, to people who would com
 </tr>
 <tr>
 <td><strong>Total:</strong></td>
-<td>2418</td>
+<td>2430</td>
 </tr>
 </tbody>
 </table>
