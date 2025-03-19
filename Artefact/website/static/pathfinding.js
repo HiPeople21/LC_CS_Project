@@ -307,6 +307,10 @@ const feedbackButtons = document.querySelectorAll("#feedback-buttons button");
 
 feedbackButtons.forEach(button => {
     button.addEventListener("click", async e => {
+        if (parseInt(endTime.value) <= parseInt(startTime.value)) {
+            alert("End time must be greater than start time");
+            return;
+        }
         if (!startLongitude.value || !startLatitude.value || !destinationLongitude.value || !destinationLatitude.value) {
             alert("Please input latitude and longitude values");
             return;
