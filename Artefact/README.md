@@ -15,8 +15,5 @@ How to setup:
     - `cd` to `Artefact`'s parent folder. The rest of the instructions will take place from this folder
     - Run `python -m Artefact.data_filter.data_filter` to create the files in `data_filter/output_data`
     - Run `python -m Artefact.data_filter.secondary_filter` to create and populate `database.db`
-4. Create the visualisations:
-    - Create `website/static/charts/bar` and `website/static/charts/heatmap`
-    - Run `python -m Artefact.visualisations.charts` to create the charts, which are created in `website/static/charts`
-6. Set up the website:
+4. Set up the website:
     - Run `waitress-serve --listen=127.0.0.1:5000 Artefact.website.app:app`
