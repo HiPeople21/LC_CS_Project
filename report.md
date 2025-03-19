@@ -45,60 +45,13 @@ Below I will list out the requirements and how my project met them.
 
 ### Basic Requirements (BRs):
 1. I selected my datasets, which can be seen in the references. I planned to first narrow them down to only include the dates required, reformatting the time to separate column called `year`, `month`, `day`, `hour`, `minute`, and `second`. I then planned to put those values into an SQL file using SQLite, with a many-to-one relationship with sites data (latitude, longitude). The files `Artefact/data_filter` contains the files `data_filter.py` and `secondary_filter.py`, which execute the above instructions. SQL `SELECT` statements will be used in other parts of the project to access the data, filtering using `WHERE`.
-2. I planned to make 2 visualisations: a bar chart which consists of the total volume of traffic per year for each holiday, and a density heatmap of the traffic volume per holiday per year.
+2. I planned to make 2 visualisations: a bar chart which consists of the total volume of traffic per year for each holiday, and a density heatmap of the traffic volume per holiday per year. These would be saved as HTML files (since I was using Plotly and wanted the interactivity).
 3. I planned to have a Flask website to display all the visualisations I created. Bootstrap is used for some components (forms, navbar etc), but there is still custom CSS.
 
 ### Advanced Requirements (ARs):
 1. I planned to have a dropdown form for the bar chart, where you could select a holiday and it'd display the total volume per year. I planned to have both a year and a holiday dropdown for the density heatmap, where it'd update the map according to the selected fields. I also planned to use Plotly as it'd allow for information to be displayed in a tooltip when hovered over. This would all be on the `Statistics` page.
 2. I planned to have a form which ties into the next AR. This form takes in the submission time, holiday, start time, end time, start co-ordinates, destination co-ordinates, and if they found it helpful or not. There are strings, integers, floats, and booleans data types gathered. It would be validated using JavaScript (checking all data is there/checking latitudes and longitusdes are valid) before being sent off to the server in a POST request using `fetch`. The responses will be saved in `responses.db` using SQLite, and will be displayed in a table on a `Responses` page.
 3. The form mentioned is on a `Pathfinding` page. Here there is a density heatmap (made using Leaflet and heatmap.js) of the average volume per site over the years for a specified holiday. You could them input co-ordinates or click on the heatmap to place points, which you can then pathfind between. I used `np.histogram2d` to make a matrix of the congestion data and then used `scipy.gaussian_filter` to make it a density heatmap matrix. I used the A* algorithm on the density heatmap matrix to generate the optimal path.
-
-The pseudocode for the A* algorithm is below.
-```
-input start_latitude, start_longitude, end_latitude, end_longitude, heatmap_matrix, latitude_edges, longitude_edges
-
-set start_latitude to the closest value from latitude_edges
-set start_longitude to the closest value from longitude_edges
-
-set destination_latitude to the closest value from latitude_edges
-set destination_longitude to the closest value from longitude_edges
-
-set start_point to be a tuple of start_latitude and start_longitude
-set destination_point to be a tuple of destination_latitude and destination_longitude
-
-set came_from to be an empty dictionary
-set g_score to be a dictionary with keys as the points and all values to be infinity
-set g_score of start_point to 0
-
-set f_score to be a dictionary with keys as the points and all values to be infinity
-set f_score of start_point to be the Euclidean distance between it and the destination_point
-
-set open_set to contain tuple of the f_score of the start_point and the start_point itself
-
-while loop:
-	pop the smallest value from open_set, ordered by the f_scores
-	set current to popped off point
-
-	if the current is the desination_point:
-		retrace steps using came_from to form the path
-		return path
-
-	set neighbours to the neighbouring cells in the matrix (includes diagonal)
-	
-	for loop neighbours:
-		set neighbour to next element
-		
-		set tentative_g_score to the current element's g_score plus the weight (from the matrix) of the neighbour point
-		
-		if the tentative_g_score is less than the g_score of the neighbour:
-			set came_from of the key neighbour to the value current
-			set g_score of the neighbour to the tentative_g_score
-			set f_score of the neighbour to the g_score of the neighbour plus the Euclidean distance of the neighbour and the destination
-			if the neighbour is not in the open_set:	
-				push a tuple of the f_score of the neighbour and the neighbour onto the open_set
-
-return an empty list
-```
 
 Flowcharts for the overall pathfinding process, data filtering and cleaning, and chart creation is below.
 ![Flowcharts](/flowcharts.png)
@@ -147,7 +100,83 @@ Week 10:
 Week 11:
 - Finished website
 
-I had them saved in `Artefact/data_filter/data`, inside which thet are sorted by years, and follow the naming scheme `SCATS{month}{year}.csv`. An example of one such file is `Artefact/data_filter/data/2020/SCATSJanuary2020.csv`. The files `Artefact/data_filter/data_filter` and `Artefact/data_filter/secondary_filter` are files which are run in that order to filter and clean the data. After running `Artefact/data_filter/data_filter`, the data will be filtered and cleaned to be stored in `Artefact/data_filter/output_data`, within which has the same structure as `Artefact/data_filter/data`. This stores the data of only the dates I will use, with a reformatted time (separated into year, month, day, hour, minute, second). After running `Artefact/data_filter/secondary_filter`, the data is summed up by site (the data is separated by multiple sensors at each site) and stored up in the SQL file `Artefact/data_filter/database.db`.
+I had the starting data saved in `Artefact/data_filter/data`, inside which they are sorted by years, and follow the naming scheme `SCATS{month}{year}.csv`. An example of one such file is `Artefact/data_filter/data/2020/SCATSJanuary2020.csv`. The files `Artefact/data_filter/data_filter` and `Artefact/data_filter/secondary_filter` are files which are run in that order to filter and clean the data. After running `Artefact/data_filter/data_filter`, the data will be filtered and cleaned to be stored in `Artefact/data_filter/output_data`, within which has the same structure as `Artefact/data_filter/data`. This stores the data of only the dates I will use, with a reformatted time (separated into year, month, day, hour, minute, second). After running `Artefact/data_filter/secondary_filter`, the data is summed up by site (the data is separated by multiple sensors at each site) and stored up in the SQL file `Artefact/data_filter/database.db`.
+
+The data from `database.db` was used to create the bar charts and heatmaps. I had to generate the holiday dates for each year to create these visualisations as most holidays changed dates every year. I summed up the total traffic in a year for the years of which I had data for that holiday, and plotted it on a bar chart. I also took the latitude, longitude, and traffic volume of each row which corresponded to a certain holiday on a certain year to create the heatmaps.
+
+I faced a few issues while working on the project:
+- Audio didn't work in school, so we had to record stuff at home
+- I kept on getting `ImportError: attempted relative import with no known parent package`, since my code was split across 3 modules. The solution that I found was to run everything as `python -m Artefact.module.file`, as this allows for the parent packages to be known.
+- One of my biggest issues was Plotly not working when I tried to inject it into the website. Since I needed to be able to have the visualisations change, I needed to be able to dynamically change them out. However, when I tried to send the file over as a string and change the `.innerHTML` of the parent, the visualisation either didn't show up, or didn't have any data. I still don't know why this was the case, but I found a solution. I decided to display them using `<iframe>`s, changing the `src` using JavaScript to change the visualisation.
+
+The pseudocode for the A* algorithm is below.
+```
+input start_latitude, start_longitude, end_latitude, end_longitude, heatmap_matrix, latitude_edges, longitude_edges
+
+set start_latitude to the closest value from latitude_edges
+set start_longitude to the closest value from longitude_edges
+
+set destination_latitude to the closest value from latitude_edges
+set destination_longitude to the closest value from longitude_edges
+
+set start_point to be a tuple of start_latitude and start_longitude
+set destination_point to be a tuple of destination_latitude and destination_longitude
+
+set came_from to be an empty dictionary
+set g_score to be a dictionary with keys as the points and all values to be infinity
+set g_score of start_point to 0
+
+set f_score to be a dictionary with keys as the points and all values to be infinity
+set f_score of start_point to be the Euclidean distance between it and the destination_point
+
+set open_set to contain tuple of the f_score of the start_point and the start_point itself
+
+while loop:
+	pop the smallest value from open_set, ordered by the f_scores
+	set current to popped off point
+
+	if the current is the desination_point:
+		retrace steps using came_from to form the path
+		return path
+
+	set neighbours to the neighbouring cells in the matrix (includes diagonal)
+	
+	for loop neighbours:
+		set neighbour to next element
+		
+		set tentative_g_score to the current element's g_score plus the weight (from the matrix) of the neighbour point
+		
+		if the tentative_g_score is less than the g_score of the neighbour:
+			set came_from of the key neighbour to the value current
+			set g_score of the neighbour to the tentative_g_score
+			set f_score of the neighbour to the g_score of the neighbour plus the Euclidean distance of the neighbour and the destination
+			if the neighbour is not in the open_set:	
+				push a tuple of the f_score of the neighbour and the neighbour onto the open_set
+
+return an empty list
+```
+
+### Testing
+I was only able to do testing by hand and was unable to set up any unittests, as I wasn't sure how I'd verify the validity of some of the responses (e.g. heatmaps being created). Below are some of the cases I tested.
+
+#### Statistics Page
+| Action | Expected Result | Actual Result | Pass/Fail | Reason |
+| ------ | --------------- | ------------- | --------- | ------ |
+| Changed holiday using forms | Visualisations would change to the correct ones | They changed correct graphs | Pass | The charts were able to successfully change to correspond to the holiday selected |
+| Selected year to be 2024 and then tried to select an invalid holiday (missing data) | Disables the invalid holiday as options | Invalid holiday disables | Pass | The invalid holidays were disabled, so they couldn't be selected, as the corresponding graphs didn't exist |
+| Select invalid 2024 holidays before changing the year to 2024, then changing the year to 2024 | Change the holiday to a valid one | Holiday changes to "New Year's Day" | Pass | The holiday was changed so the user can't have an invalid holiday selected |
+
+#### Pathfinding Page
+| Action | Expected Result | Actual Result | Pass/Fail | Reason |
+| ------ | --------------- | ------------- | --------- | ------ |
+| Changed holiday using forms | Heatmap would change to the have the correct data | The heatmap got the correct data | Pass | The heatmap was able to successfully change to get data that corresponded to the holiday selected |
+| Set end time to be the same as or before start time | Alerts the user of the error | Alerts the user | Pass | The heatmap wasn't changed as the inputs were invalid |
+| Trying to submit empty latitudes and longitudes | Popup saying there's missing fields | Popups show | Pass | The user is made aware of missing fields |
+| Trying to submit invalid latitudes and longitudes | Alert saying there's invalid fields | Alert shows | Pass | The user is made aware that the one of the latitudes or longitudes is invalid |
+| Submits correct data for pathfinding | Path generated | Path is plotted on the map | Pass | The intended response occurs |
+| Tries to give feedback with incorrect fields (co-ordinates or times) | Alerts user of the issue | Alert shows | Pass | The user is made aware of the incorrect data |
+| Tries to give feedback with empty fields | Popup saying there's missing fieldsd | Popups show | Pass | The user is made aware of missing fields |
+| Feedback given with valid fields | Alert thanking user for feedback shows | Alert shows | Pass | Feedback is successfully sent to the server and stored |
 
 ## 5. Evaluation
 I enjoyed working on this project. I believe that my project met the BRs and ARs quite well. However, there are things that I would like to have improved on.
@@ -159,6 +188,8 @@ Secondly, I would have liked to have more data in different areas, as the vast m
 Thirdly, I would have liked to be able to collect data on the users, such as their speed and GPS co-ordinates, and save and use it to help calculate more accurate routes.
 
 Fourthly, I would have liked to be able to access road data, and suggest real routes rather than a vague outline of the shape of a path. However, the data I found was probably not comprehensive enough, and would have complicated the project too much.
+
+Fifthly, I would have tweaked the pathfinding algorithm a bit, as currently the relationship between how much the distance and the volume affects it could be improved.
 
 Lastly, given more time, I would have liked to make the mobile responsiveness of the website nicer, like in my wireframes. Unfortunately, I never really got around to improving them, and they remain as vertical versions of their desktop counterparts.
 
@@ -227,7 +258,7 @@ Datasets:
 | ---------------------- | ---------- |
 | 1. Meeting the brief   | 0          |
 | 2. Investigation       | 576        |
-| 3. Plan and Design     | 609        |
+| 3. Plan and Design     | 617        |
 | 4. Create              | 0          |
 | 5. Evaluation          | 249        |
 | **Total:**             | 0          |
