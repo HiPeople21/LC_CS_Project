@@ -3,15 +3,8 @@
 # Report
 
 ## 1. Meeting the Brief
-<!--- Below is how my project deals with the requirements in the brief.
+I have how I planned to meet each BR and AR in the **Plan and Design** section of the report. In the video I explained and demonstrated how the BRs and ARs were met.
 
-### BRs:
-1. I selected multiple datasets about traffic congestion from [Smart Dublin](https://data.smartdublin.ie/), such as [this one](https://data.smartdublin.ie/dataset/dcc-scats-detector-volume-jan-jun-2023), which is only for January to June 2023. Using these datasets, I eventually ended up with data from 2020-2024. I also used [this dataset](https://data.gov.ie/dataset/traffic-signals-and-scats-sites-locations-dcc) from https://data.gov.ie/ as the congestion data has site IDs, and these IDs link up to this dataset which has the longitudes and latitudes. I filtered this data to store them in an SQL file with 2 tables, one with the congestion data, and the other with the site data. The files used to do this can be found in the `data_filter` folder.
-2. 
-
-### ARs:
-1. 
---->
 ## 2. Investigation
 I researched 3 scenarios to complete this project around. The first one was a nutrition calculator, where you could input certain conditions you would want (e.g. x grams or less of salt). The second idea was an NBA stat predictor. The last idea was a traffic congestion analyser. The nutrition calculator would have been made for people who would like to find meals that suit their conditions. The NBA stat predictor would have been made for people who bet on NBA games, such as overs and unders for certain players. The traffic idea would have been made for people who drive or just commute in general.
 
@@ -259,11 +252,11 @@ Datasets:
     
 ## 7. Summary Word Count
 
-| Section                | Word Count |
-| ---------------------- | ---------- |
-| 1. Meeting the brief   | 0 (Video)  |
-| 2. Investigation       | 473        |
-| 3. Plan and Design     | 580        |
-| 4. Create              | 1021       |
-| 5. Evaluation          | 276        |
-| **Total:**             | 2350       |
+| Section                | Word Count   |
+| ---------------------- | ------------ |
+| 1. Meeting the brief   | 34 + (Video) |
+| 2. Investigation       | 473          |
+| 3. Plan and Design     | 580          |
+| 4. Create              | 1021         |
+| 5. Evaluation          | 276          |
+| **Total:**             | 2384         |
