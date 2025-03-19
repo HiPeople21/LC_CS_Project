@@ -29,22 +29,78 @@ After looking into the SDCC traffic congestion database, I found the SCATS traff
 - Christmas Day
 - St Stephen's Day
 
-This now meant that my target demographic shifted a bit, to people who would commute during holidays, which targets tourists more as well. However the data I had is still just for a portion of Dublin, mostly within the M50.
+This now meant that my target demographic shifted a bit, to people who would commute during holidays, which targets tourists more as well. I believe this is an important project as commuting in Dublin can be difficult sometimes, and during holidays people have more free time, potentially leading to more traffic as people travel to places to spend the day. The difference between my idea and between existing solutions, such as Google Maps or Waze, is that they use real time GPS and congestion data, while my solution uses historical congestion data. However the data I had is still just for a portion of Dublin, mostly within the M50.
+
+I will analyse the volume data, creating density heatmaps and making bar charts with the total congestion per year on the y-axis and year on the x-axis for each holiday. By analysing the data, I can identify areas of high congestion and suggest an optimal route to minimise the congestion the user would go through, taking the distance into account as well. The diagrams will be created using Plotly.
 
 ## 3. Plan and Design
-I plan to have a website with 4 pages as the web interface, which will be a home page, pathfinding page, statistics page, and responses page. 
+I plan to have a website with 4 pages as the web interface, which will be a home page, pathfinding page, statistics page, and responses page. I used Figma to create wireframes of the web pages.
 
 Below I will list out the requirements and how my project met them.
 
 ### Basic Requirements (BRs):
-1. I selected my datasets, which can be seens in the references. I planned to first narrow them down to only include the dates required, reformatting the time to separate column called `year`, `month`, `day`, `hour`, `minute`, and `second`. I then planned to put those values into an SQL file, with a many-to-one relationship with sites data. The files `Artefact/data_filter` contains the files `data_filter.py` and `secondary_filter.py`, which execute the above instructions.
+1. I selected my datasets, which can be seens in the references. I planned to first narrow them down to only include the dates required, reformatting the time to separate column called `year`, `month`, `day`, `hour`, `minute`, and `second`. I then planned to put those values into an SQL file using SQLite, with a many-to-one relationship with sites data (latitude, longitude). The files `Artefact/data_filter` contains the files `data_filter.py` and `secondary_filter.py`, which execute the above instructions. SQL `SELECT` statements will be used in other parts of the project to access the data, filtering using `WHERE`.
 2. I planned to make 2 visualisations: a bar chart which consists of the total volume of traffic per year for each holiday, and a density heatmap of the traffic volume per holiday per year.
-3. I planned to have a Flask website to display all the visualisations I created.
+3. I planned to have a Flask website to display all the visualisations I created. Bootstrap is used for some components (forms, navbar etc), but there is still custom CSS.
 
 ### Advanced Requirements (ARs):
-1. I planned to have a dropdown for the bar chart, where you could select a holiday and it'd display the total volume per year. I planned to have both a year and a holiday dropdown for the density heatmap, where it'd update the map according to the selected fields. I also planned to use Plotly as it'd allow for information to be displayed in a tooltip when hovered over. This would all be on the `Statistics` page.
-2. I planned to have a form which ties into the next AR. This form takes in the submission time, holiday, start time, end time, start co-ordinates, destination co-ordinates, and if they found it helpful or not. There are strings, integers, floats, and booleans data types gathered. It would be validates using JavaScript before being sent off to the server in a POST request using `fetch`. The responses will be displayed in a table on a `Responses` page.
-3. The form mentioned is on a `Pathfinding` page. Here there is a density heatmap of the average volume per site over the years for a specified holiday. You could them input co-ordinates or click on the heatmap to place points, which you can then pathfind between. I used the A* algorithm for this.
+1. I planned to have a dropdown form for the bar chart, where you could select a holiday and it'd display the total volume per year. I planned to have both a year and a holiday dropdown for the density heatmap, where it'd update the map according to the selected fields. I also planned to use Plotly as it'd allow for information to be displayed in a tooltip when hovered over. This would all be on the `Statistics` page.
+2. I planned to have a form which ties into the next AR. This form takes in the submission time, holiday, start time, end time, start co-ordinates, destination co-ordinates, and if they found it helpful or not. There are strings, integers, floats, and booleans data types gathered. It would be validated using JavaScript (checking all data is there/checking latitudes and longitusdes are valid) before being sent off to the server in a POST request using `fetch`. The responses will be saved in `responses.db` using SQLite, and will be displayed in a table on a `Responses` page.
+3. The form mentioned is on a `Pathfinding` page. Here there is a density heatmap (made using Leaflet and heatmap.js) of the average volume per site over the years for a specified holiday. You could them input co-ordinates or click on the heatmap to place points, which you can then pathfind between. I used `np.histogram2d` to make a matrix of the congestion data and then used `scipy.gaussian_filter` to make it a density heatmap matrix. I used the A* algorithm on the density heatmap matrix to generate the optimal path.
+
+The pseudocode for the A* algorithm is below.
+```
+input start_latitude, start_longitude, end_latitude, end_longitude, heatmap_matrix, latitude_edges, longitude_edges
+
+set start_latitude to the closest value from latitude_edges
+set start_longitude to the closest value from longitude_edges
+
+set destination_latitude to the closest value from latitude_edges
+set destination_longitude to the closest value from longitude_edges
+
+set start_point to be a tuple of start_latitude and start_longitude
+set destination_point to be a tuple of destination_latitude and destination_longitude
+
+set came_from to be an empty dictionary
+set g_score to be a dictionary with keys as the points and all values to be infinity
+set g_score of start_point to 0
+
+set f_score to be a dictionary with keys as the points and all values to be infinity
+set f_score of start_point to be the Euclidean distance between it and the destination_point
+
+set open_set to contain tuple of the f_score of the start_point and the start_point itself
+
+while loop:
+	pop the smallest value from open_set, ordered by the f_scores
+	set current to popped off point
+
+	if the current is the desination_point:
+		retrace steps using came_from to form the path
+		return path
+
+	set neighbours to the neighbouring cells in the matrix (includes diagonal)
+	
+	for loop neighbours:
+		set neighbour to next element
+		
+		set tentative_g_score to the current element's g_score plus the weight (from the matrix) of the neighbour point
+		
+		if the tentative_g_score is less than the g_score of the neighbour:
+			set came_from of the key neighbour to the value current
+			set g_score of the neighbour to the tentative_g_score
+			set f_score of the neighbour to the g_score of the neighbour plus the Euclidean distance of the neighbour and the destination
+			if the neighbour is not in the open_set:	
+				push a tuple of the f_score of the neighbour and the neighbour onto the open_set
+
+return an empty list
+```
+
+Flowcharts for the overall pathfinding process, data filtering and cleaning, and chart creation is below.
+![Flowcharts](/flowcharts.png)
+
+Wireframes for the  `Pathfinding` and `Statistics` page below (originally I only planned to have these 2 pages)
+![Wireframe for pathfinding page](/wireframe-pathfinding.png)
+![Wireframe for statistics page](/wireframe-statistics.png)
 
 ## 4. Create
 ### Log
@@ -155,7 +211,7 @@ Datasets:
 | Section                | Word Count |
 | ---------------------- | ---------- |
 | 1. Meeting the brief   | 0          |
-| 2. Investigation       | 0          |
+| 2. Investigation       | 523        |
 | 3. Plan and Design     | 0          |
 | 4. Create              | 0          |
 | 5. Evaluation          | 0          |
