@@ -261,7 +261,7 @@ Datasets:
 
 | Section                | Word Count |
 | ---------------------- | ---------- |
-| 1. Meeting the brief   | 0          |
+| 1. Meeting the brief   | 0 (Video)  |
 | 2. Investigation       | 473        |
 | 3. Plan and Design     | 580        |
 | 4. Create              | 1021       |
