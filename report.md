@@ -15,7 +15,7 @@ Below is how my project deals with the requirements in the brief.
 ## 2. Investigation
 I researched 3 scenarios to complete this project around. The first one was a nutrition calculator, where you could input certain conditions you would want (e.g. x grams or less of salt). The second idea was an NBA stat predictor. The last idea was a traffic congestion analyser. The nutrition calculator would have been made for people who would like to find meals that suit their conditions. The NBA stat predictor would have been made for people who bet on NBA games, such as overs and unders for certain players. The traffic idea would have been made for people who drive or just commute in general.
 
-I decided to eliminate the nutrition calculator as one of my ideas first, as it was not a topic which I had any particular interest. Next, I eliminated the NBA stat predictor, as I thought the idea would be too computationally complex. This is because my idea for this project would be to analyse players' performances with and against other players and teams, but also including trends from previous games. However, in this idea, I would have to compute the performances of said other players, as they would affect the original player. This left me with the traffic idea. This idea appealed to me as I had worked on geographical data in the past (population within Dublin) and I had to create a visualisation for that, so I knew I would be more able to do this idea. I did research into existing solutions and provided on example for each of my ideas in the references. Datasets I researched for each idea are also listed in the references.
+I decided to eliminate the nutrition calculator as one of my ideas first, as it was not a topic which I had any particular interest. I also decided that it may have been difficult to try come up with graphs for this idea (BR 2). Next, I eliminated the NBA stat predictor, as I thought the idea would be too computationally complex. This is because my idea for this project would be to analyse players' performances with and against other players and teams, but also including trends from previous games. However, in this idea, I would have to compute the performances of said other players, as they would affect the original player. As a result I concluded that BR 2 would be very difficult for this idea. This left me with the traffic idea. This idea appealed to me as I had worked on geographical data in the past (population within Dublin) and I had to create a visualisation for that, so I knew I would be more able to do this idea. I did research into existing solutions and provided on example for each of my ideas in the references. Datasets I researched for each idea are also listed in the references.
 
 After looking into the SDCC traffic congestion database, I found the SCATS traffic congestion database, which has much more sites. However, faced with the large amount of data, I decided to restrict my project to the 10 public holidays only, the holidays being:
 - New Year's Day
@@ -31,15 +31,20 @@ After looking into the SDCC traffic congestion database, I found the SCATS traff
 
 This now meant that my target demographic shifted a bit, to people who would commute during holidays, which targets tourists more as well. I believe this is an important project as commuting in Dublin can be difficult sometimes, and during holidays people have more free time, potentially leading to more traffic as people travel to places to spend the day. The difference between my idea and between existing solutions, such as Google Maps or Waze, is that they use real time GPS and congestion data, while my solution uses historical congestion data. However the data I had is still just for a portion of Dublin, mostly within the M50.
 
-I will analyse the volume data, creating density heatmaps and making bar charts with the total congestion per year on the y-axis and year on the x-axis for each holiday. By analysing the data, I can identify areas of high congestion and suggest an optimal route to minimise the congestion the user would go through, taking the distance into account as well. The diagrams will be created using Plotly.
+I will analyse the volume data, creating density heatmaps and making bar charts with the total congestion per year on the y-axis and year on the x-axis for each holiday. By analysing the data, I can identify areas of high congestion and suggest an optimal route to minimise the congestion the user would go through, taking the distance into account as well. The diagrams will be created using Plotly (I had originally wanted to use Matplotlib, but later decided to use Plotly because of its frontend interactivity).
 
 ## 3. Plan and Design
 I plan to have a website with 4 pages as the web interface, which will be a home page, pathfinding page, statistics page, and responses page. I used Figma to create wireframes of the web pages.
 
+I want my project to create charts showing the trend in total traffic per year for each holiday.
+I want my project to create density heatmaps to display the traffic volumes.
+I want my project to use a pathfinding algorithm that would be able to use the density heatmaps to find the best shape of routes.
+I want my project to be able to allow for start and destination points to be picked from a map by clicking on it.
+
 Below I will list out the requirements and how my project met them.
 
 ### Basic Requirements (BRs):
-1. I selected my datasets, which can be seens in the references. I planned to first narrow them down to only include the dates required, reformatting the time to separate column called `year`, `month`, `day`, `hour`, `minute`, and `second`. I then planned to put those values into an SQL file using SQLite, with a many-to-one relationship with sites data (latitude, longitude). The files `Artefact/data_filter` contains the files `data_filter.py` and `secondary_filter.py`, which execute the above instructions. SQL `SELECT` statements will be used in other parts of the project to access the data, filtering using `WHERE`.
+1. I selected my datasets, which can be seen in the references. I planned to first narrow them down to only include the dates required, reformatting the time to separate column called `year`, `month`, `day`, `hour`, `minute`, and `second`. I then planned to put those values into an SQL file using SQLite, with a many-to-one relationship with sites data (latitude, longitude). The files `Artefact/data_filter` contains the files `data_filter.py` and `secondary_filter.py`, which execute the above instructions. SQL `SELECT` statements will be used in other parts of the project to access the data, filtering using `WHERE`.
 2. I planned to make 2 visualisations: a bar chart which consists of the total volume of traffic per year for each holiday, and a density heatmap of the traffic volume per holiday per year.
 3. I planned to have a Flask website to display all the visualisations I created. Bootstrap is used for some components (forms, navbar etc), but there is still custom CSS.
 
@@ -98,7 +103,7 @@ return an empty list
 Flowcharts for the overall pathfinding process, data filtering and cleaning, and chart creation is below.
 ![Flowcharts](/flowcharts.png)
 
-Wireframes for the  `Pathfinding` and `Statistics` page below (originally I only planned to have these 2 pages)
+Wireframes for the  `Pathfinding` and `Statistics` page below (originally I only planned to have these 2 pages, but soon after I decided to change the structure).
 ![Wireframe for pathfinding page](/wireframe-pathfinding.png)
 ![Wireframe for statistics page](/wireframe-statistics.png)
 
@@ -145,7 +150,17 @@ Week 11:
 I had them saved in `Artefact/data_filter/data`, inside which thet are sorted by years, and follow the naming scheme `SCATS{month}{year}.csv`. An example of one such file is `Artefact/data_filter/data/2020/SCATSJanuary2020.csv`. The files `Artefact/data_filter/data_filter` and `Artefact/data_filter/secondary_filter` are files which are run in that order to filter and clean the data. After running `Artefact/data_filter/data_filter`, the data will be filtered and cleaned to be stored in `Artefact/data_filter/output_data`, within which has the same structure as `Artefact/data_filter/data`. This stores the data of only the dates I will use, with a reformatted time (separated into year, month, day, hour, minute, second). After running `Artefact/data_filter/secondary_filter`, the data is summed up by site (the data is separated by multiple sensors at each site) and stored up in the SQL file `Artefact/data_filter/database.db`.
 
 ## 5. Evaluation
-I believe
+I enjoyed working on this project. I believe that my project met the BRs and ARs quite well. However, there are things that I would like to have improved on.
+
+First of all, since the data is there, I would have liked to repeat the process for every single day, to create a more day-to-day tool rather than a seasonal one. However, the sheer amount of data was too much for this project.
+
+Secondly, I would have liked to have more data in different areas, as the vast majority of the volume data that I had lay within the M50. Once again, this would be a lot of data, but given a lot more time I think that this would be possible. This would allow for this project to benefit more people.
+
+Thirdly, I would have liked to be able to collect data on the users, such as their speed and GPS co-ordinates, and save and use it to help calculate more accurate routes.
+
+Fourthly, I would have liked to be able to access road data, and suggest real routes rather than a vague outline of the shape of a path. However, the data I found was probably not comprehensive enough, and would have complicated the project too much.
+
+Lastly, given more time, I would have liked to make the mobile responsiveness of the website nicer, like in my wireframes. Unfortunately, I never really got around to improving them, and they remain as vertical versions of their desktop counterparts.
 
 ## 6. References
 Technologies:
@@ -211,8 +226,8 @@ Datasets:
 | Section                | Word Count |
 | ---------------------- | ---------- |
 | 1. Meeting the brief   | 0          |
-| 2. Investigation       | 523        |
-| 3. Plan and Design     | 0          |
+| 2. Investigation       | 576        |
+| 3. Plan and Design     | 609        |
 | 4. Create              | 0          |
-| 5. Evaluation          | 0          |
+| 5. Evaluation          | 249        |
 | **Total:**             | 0          |
