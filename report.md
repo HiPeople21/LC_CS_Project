@@ -3,7 +3,7 @@
 # Report
 
 ## 1. Meeting the Brief
-Below is how my project deals with the requirements in the brief.
+<!--- Below is how my project deals with the requirements in the brief.
 
 ### BRs:
 1. I selected multiple datasets about traffic congestion from [Smart Dublin](https://data.smartdublin.ie/), such as [this one](https://data.smartdublin.ie/dataset/dcc-scats-detector-volume-jan-jun-2023), which is only for January to June 2023. Using these datasets, I eventually ended up with data from 2020-2024. I also used [this dataset](https://data.gov.ie/dataset/traffic-signals-and-scats-sites-locations-dcc) from https://data.gov.ie/ as the congestion data has site IDs, and these IDs link up to this dataset which has the longitudes and latitudes. I filtered this data to store them in an SQL file with 2 tables, one with the congestion data, and the other with the site data. The files used to do this can be found in the `data_filter` folder.
@@ -11,25 +11,13 @@ Below is how my project deals with the requirements in the brief.
 
 ### ARs:
 1. 
-
+--->
 ## 2. Investigation
 I researched 3 scenarios to complete this project around. The first one was a nutrition calculator, where you could input certain conditions you would want (e.g. x grams or less of salt). The second idea was an NBA stat predictor. The last idea was a traffic congestion analyser. The nutrition calculator would have been made for people who would like to find meals that suit their conditions. The NBA stat predictor would have been made for people who bet on NBA games, such as overs and unders for certain players. The traffic idea would have been made for people who drive or just commute in general.
 
 I decided to eliminate the nutrition calculator as one of my ideas first, as it was not a topic which I had any particular interest. I also decided that it may have been difficult to try come up with graphs for this idea (BR 2). Next, I eliminated the NBA stat predictor, as I thought the idea would be too computationally complex. This is because my idea for this project would be to analyse players' performances with and against other players and teams, but also including trends from previous games. However, in this idea, I would have to compute the performances of said other players, as they would affect the original player. As a result I concluded that BR 2 would be very difficult for this idea. This left me with the traffic idea. This idea appealed to me as I had worked on geographical data in the past (population within Dublin) and I had to create a visualisation for that, so I knew I would be more able to do this idea. I did research into existing solutions and provided on example for each of my ideas in the references. Datasets I researched for each idea are also listed in the references.
 
-After looking into the SDCC traffic congestion database, I found the SCATS traffic congestion database, which has much more sites. However, faced with the large amount of data, I decided to restrict my project to the 10 public holidays only, the holidays being:
-- New Year's Day
-- St Brigid's Day
-- St Patrick's Day
-- Easter Monday
-- May Bank Holiday
-- June Bank Holiday
-- August Bank Holiday
-- October Bank Holiday
-- Christmas Day
-- St Stephen's Day
-
-This now meant that my target demographic shifted a bit, to people who would commute during holidays, which targets tourists more as well. I believe this is an important project as commuting in Dublin can be difficult sometimes, and during holidays people have more free time, potentially leading to more traffic as people travel to places to spend the day. The difference between my idea and between existing solutions, such as Google Maps or Waze, is that they use real time GPS and congestion data, while my solution uses historical congestion data. However the data I had is still just for a portion of Dublin, mostly within the M50.
+I believe this is an important project as commuting in Dublin can be difficult sometimes, so this project can be an important way to help mitigate this issue. The difference between my idea and between existing solutions, such as Google Maps or Waze, is that they use real time GPS and congestion data, while my solution uses historical congestion data. However the data I had is still just for a portion of Dublin, mostly within the M50.
 
 I will analyse the volume data, creating density heatmaps and making bar charts with the total congestion per year on the y-axis and year on the x-axis for each holiday. By analysing the data, I can identify areas of high congestion and suggest an optimal route to minimise the congestion the user would go through, taking the distance into account as well. The diagrams will be created using Plotly (I had originally wanted to use Matplotlib, but later decided to use Plotly because of its frontend interactivity).
 
@@ -44,14 +32,14 @@ I want my project to be able to allow for start and destination points to be pic
 Below I will list out the requirements and how my project met them.
 
 ### Basic Requirements (BRs):
-1. I selected my datasets, which can be seen in the references. I planned to first narrow them down to only include the dates required, reformatting the time to separate column called `year`, `month`, `day`, `hour`, `minute`, and `second`. I then planned to put those values into an SQL file using SQLite, with a many-to-one relationship with sites data (latitude, longitude). The files `Artefact/data_filter` contains the files `data_filter.py` and `secondary_filter.py`, which execute the above instructions. SQL `SELECT` statements will be used in other parts of the project to access the data, filtering using `WHERE`.
-2. I planned to make 2 visualisations: a bar chart which consists of the total volume of traffic per year for each holiday, and a density heatmap of the traffic volume per holiday per year. These would be saved as HTML files (since I was using Plotly and wanted the interactivity).
-3. I planned to have a Flask website to display all the visualisations I created. Bootstrap is used for some components (forms, navbar etc), but there is still custom CSS.
+1. I selected my datasets, which can be seen in the references. I plan to first narrow them down to only include the dates required, reformatting the time to separate column such as `year`, `month`, `day`, `hour`, `minute`, and `second`. I then planned to put those values into an SQL file using SQLite, with a many-to-one relationship with sites data (latitude, longitude). SQL `SELECT` statements will be used in other parts of the project to access the data, filtering using `WHERE`.
+2. I plan to make 2 visualisations: a bar chart which consists of the total volume of traffic per year for each holiday, and a density heatmap of the traffic volume per holiday per year. These would be saved as HTML files (since I was using Plotly and wanted the interactivity).
+3. I plan to have a Flask website to display all the visualisations I created. Bootstrap will be used for some components (forms, navbar etc), but there will still be custom CSS.
 
 ### Advanced Requirements (ARs):
-1. I planned to have a dropdown form for the bar chart, where you could select a holiday and it'd display the total volume per year. I planned to have both a year and a holiday dropdown for the density heatmap, where it'd update the map according to the selected fields. I also planned to use Plotly as it'd allow for information to be displayed in a tooltip when hovered over. This would all be on the `Statistics` page.
-2. I planned to have a form which ties into the next AR. This form takes in the submission time, holiday, start time, end time, start co-ordinates, destination co-ordinates, and if they found it helpful or not. There are strings, integers, floats, and booleans data types gathered. It would be validated using JavaScript (checking all data is there/checking latitudes and longitusdes are valid) before being sent off to the server in a POST request using `fetch`. The responses will be saved in `responses.db` using SQLite, and will be displayed in a table on a `Responses` page.
-3. The form mentioned is on a `Pathfinding` page. Here there is a density heatmap (made using Leaflet and heatmap.js) of the average volume per site over the years for a specified holiday. You could them input co-ordinates or click on the heatmap to place points, which you can then pathfind between. I used `np.histogram2d` to make a matrix of the congestion data and then used `scipy.gaussian_filter` to make it a density heatmap matrix. I used the A* algorithm on the density heatmap matrix to generate the optimal path.
+1. I plan to have a dropdown form for the bar chart, where you could select a holiday and it'd display the total volume per year. I planned to have both a year and a holiday dropdown for the density heatmap, where it'd update the map according to the selected fields. I also plan to use Plotly as it'd allow for information to be displayed in a tooltip when hovered over. This would all be on the `Statistics` page.
+2. I plan to have a form which ties into the next AR. This form takes in the submission time, holiday, start time, end time, start co-ordinates, destination co-ordinates, and if they found it helpful or not. There are strings, integers, floats, and booleans data types gathered. It would be validated using JavaScript (checking all data is there/checking latitudes and longitusdes are valid) before being sent off to the server in a POST request using `fetch`. The responses will be saved in `responses.db` using SQLite, and will be displayed in a table on a `Responses` page.
+3. The form mentioned is on a `Pathfinding` page. Here there is a density heatmap (made using Leaflet and heatmap.js) of the average volume per site over the years for a specified holiday. You could them input co-ordinates or click on the heatmap to place points, which you can then pathfind between. I plan to use the A* algorithm on the density heatmap matrix to generate the optimal path.
 
 Flowcharts for the overall pathfinding process, data filtering and cleaning, and chart creation is below.
 ![Flowcharts](/flowcharts.png)
@@ -72,30 +60,34 @@ Week 2:
 Week 3:
 - Looked at dataset
 - Chose new dataset
-- Filtered data
+- Filtered data (`data_filter.py`)
 
 Week 4:
 - Created wireframe
 - Researched data visualisation options
 
 Week 5:
-- Finished second data cleaning (approx 650k rows now)
+- Finished second data cleaning (approx 650k rows now) (`secondary_filter.py`)
 
 Week 6:
-- Worked on website
+- Worked on server (`app.py`)
+- Worked on homepage (`index.html`)
 
 Week 7:
-- Worked on website
+- Worked on server (`app.py`)
+- Worked on statistics page (`statistics.html`)
 
 Week 8:
-- Worked on barchart
+- Worked on barchart (`charts.py`)
 
 Week 9:
-- Worked on heatmap
+- Worked on heatmap (`charts.py`)
 
 Week 10:
-- Rewrote visuals in plotly
-- Worked on pathfinding
+- Rewrote visuals in plotly (`charts.py`)
+- Worked on server (`app.py`)
+- Worked on pathfinding (`pathfinding.html`)
+- Worked on pathfinding page (`pathfinding.py`)
 
 Week 11:
 - Finished website
@@ -105,11 +97,23 @@ I had the starting data saved in `Artefact/data_filter/data`, inside which they 
 The data from `database.db` was used to create the bar charts and heatmaps. I had to generate the holiday dates for each year to create these visualisations as most holidays changed dates every year. I summed up the total traffic in a year for the years of which I had data for that holiday, and plotted it on a bar chart. I also took the latitude, longitude, and traffic volume of each row which corresponded to a certain holiday on a certain year to create the heatmaps.
 
 I faced a few issues while working on the project:
+- After looking into the SDCC traffic congestion database, I found the SCATS traffic congestion database, which has much more sites. However, faced with the large amount of data, I decided to restrict my project to the 10 public holidays only, the holidays being:
+  - New Year's Day
+  - St Brigid's Day
+  - St Patrick's Day
+  - Easter Monday
+  - May Bank Holiday
+  - June Bank Holiday
+  - August Bank Holiday
+  - October Bank Holiday
+  - Christmas Day
+  - St Stephen's Day
+This now meant that my target demographic shifted a bit, to people who would commute during holidays, which targets tourists more as well.
 - Audio didn't work in school, so we had to record stuff at home
 - I kept on getting `ImportError: attempted relative import with no known parent package`, since my code was split across 3 modules. The solution that I found was to run everything as `python -m Artefact.module.file`, as this allows for the parent packages to be known.
 - One of my biggest issues was Plotly not working when I tried to inject it into the website. Since I needed to be able to have the visualisations change, I needed to be able to dynamically change them out. However, when I tried to send the file over as a string and change the `.innerHTML` of the parent, the visualisation either didn't show up, or didn't have any data. I still don't know why this was the case, but I found a solution. I decided to display them using `<iframe>`s, changing the `src` using JavaScript to change the visualisation.
 
-The pseudocode for the A* algorithm is below.
+The A* algorithm that I used is a modified version of Dijkstra's algorithm, but with a heuristic added on, which encourages the algorithm to look for paths towards the destination. The pseudocode for the A* algorithm is below.
 ```
 input start_latitude, start_longitude, end_latitude, end_longitude, heatmap_matrix, latitude_edges, longitude_edges
 
@@ -257,8 +261,8 @@ Datasets:
 | Section                | Word Count |
 | ---------------------- | ---------- |
 | 1. Meeting the brief   | 0          |
-| 2. Investigation       | 576        |
-| 3. Plan and Design     | 617        |
-| 4. Create              | 0          |
-| 5. Evaluation          | 249        |
-| **Total:**             | 0          |
+| 2. Investigation       | 473        |
+| 3. Plan and Design     | 580        |
+| 4. Create              | 1021       |
+| 5. Evaluation          | 276        |
+| **Total:**             | 2350       |
