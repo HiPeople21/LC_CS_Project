@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>My Computer Science Project Report</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      h1, h2, h3 {
+  text-align: center;
+  text-decoration: underline;
+}
+
+th {
+  border: 2px solid black;
+}
+
+td {
+  border: 1px solid black;
+}
+
+th, td {
+  padding: 0.5em;
+}
+
+pre {
+  background-color: black;
+  color: white;
+  padding: 0.5em;
+}
+    </style>
+  </head>
+  <body>
+    <h1 id="report">Report</h1>
+<h2 id="1-meeting-the-brief">1. Meeting the Brief</h2>
+<p>I have how I planned to meet each BR and AR in the <strong>Plan and Design</strong> section of the report. In the video I explained and demonstrated how the BRs and ARs were met.</p>
+<h2 id="2-investigation">2. Investigation</h2>
+<p>I researched 3 scenarios to complete this project around. The first one was a nutrition calculator, where you could input certain conditions you would want (e.g. x grams or less of salt). The second idea was an NBA stat predictor. The last idea was a traffic congestion analyser. The nutrition calculator would have been made for people who would like to find meals that suit their conditions. The NBA stat predictor would have been made for people who bet on NBA games, such as overs and unders for certain players. The traffic idea would have been made for people who drive or just commute in general.</p>
+<p>I decided to eliminate the nutrition calculator as one of my ideas first, as it was not a topic which I had any particular interest. I also decided that it may have been difficult to try come up with graphs for this idea (BR 2). Next, I eliminated the NBA stat predictor, as I thought the idea would be too computationally complex. This is because my idea for this project would be to analyse players&#39; performances with and against other players and teams, but also including trends from previous games. However, in this idea, I would have to compute the performances of said other players, as they would affect the original player. As a result I concluded that BR 2 would be very difficult for this idea. This left me with the traffic idea. This idea appealed to me as I had worked on geographical data in the past (population within Dublin) and I had to create a visualisation for that, so I knew I would be more able to do this idea. I did research into existing solutions and provided on example for each of my ideas in the references. Datasets I researched for each idea are also listed in the references.</p>
+<p>I believe this is an important project as commuting in Dublin can be difficult sometimes, so this project can be an important way to help mitigate this issue. The difference between my idea and between existing solutions, such as Google Maps or Waze, is that they use real time GPS and congestion data, while my solution uses historical congestion data. However the data I had is still just for a portion of Dublin, mostly within the M50.</p>
+<p>I will analyse the volume data, creating density heatmaps and making bar charts with the total congestion per year on the y-axis and year on the x-axis for each holiday. By analysing the data, I can identify areas of high congestion and suggest an optimal route to minimise the congestion the user would go through, taking the distance into account as well. The diagrams will be created using Plotly (I had originally wanted to use Matplotlib, but later decided to use Plotly because of its frontend interactivity).</p>
+<h2 id="3-plan-and-design">3. Plan and Design</h2>
+<p>I plan to have a website with 4 pages as the web interface, which will be a home page, pathfinding page, statistics page, and responses page. I used Figma to create wireframes of the web pages.</p>
+<p>I want my project to create charts showing the trend in total traffic per year for each holiday.
+I want my project to create density heatmaps to display the traffic volumes.
+I want my project to use a pathfinding algorithm that would be able to use the density heatmaps to find the best shape of routes.
+I want my project to be able to allow for start and destination points to be picked from a map by clicking on it.</p>
+<p>Below I will list out the requirements and how my project met them.</p>
+<h3 id="basic-requirements-brs-">Basic Requirements (BRs):</h3>
+<ol>
+<li>I selected my datasets, which can be seen in the references. I plan to first narrow them down to only include the dates required, reformatting the time to separate column such as <code>year</code>, <code>month</code>, <code>day</code>, <code>hour</code>, <code>minute</code>, and <code>second</code>. I then planned to put those values into an SQL file using SQLite, with a many-to-one relationship with sites data (latitude, longitude). SQL <code>SELECT</code> statements will be used in other parts of the project to access the data, filtering using <code>WHERE</code>.</li>
+<li>I plan to make 2 visualisations: a bar chart which consists of the total volume of traffic per year for each holiday, and a density heatmap of the traffic volume per holiday per year. These would be saved as HTML files (since I was using Plotly and wanted the interactivity).</li>
+<li>I plan to have a Flask website to display all the visualisations I created. Bootstrap will be used for some components (forms, navbar etc), but there will still be custom CSS.</li>
+</ol>
+<h3 id="advanced-requirements-ars-">Advanced Requirements (ARs):</h3>
+<ol>
+<li>I plan to have a dropdown form for the bar chart, where you could select a holiday and it&#39;d display the total volume per year. I planned to have both a year and a holiday dropdown for the density heatmap, where it&#39;d update the map according to the selected fields. I also plan to use Plotly as it&#39;d allow for information to be displayed in a tooltip when hovered over. This would all be on the <code>Statistics</code> page.</li>
+<li>I plan to have a form which ties into the next AR. This form takes in the submission time, holiday, start time, end time, start co-ordinates, destination co-ordinates, and if they found it helpful or not. There are strings, integers, floats, and booleans data types gathered. It would be validated using JavaScript (checking all data is there/checking latitudes and longitusdes are valid) before being sent off to the server in a POST request using <code>fetch</code>. The responses will be saved in <code>responses.db</code> using SQLite, and will be displayed in a table on a <code>Responses</code> page.</li>
+<li>The form mentioned is on a <code>Pathfinding</code> page. Here there is a density heatmap (made using Leaflet and heatmap.js) of the average volume per site over the years for a specified holiday. You could them input co-ordinates or click on the heatmap to place points, which you can then pathfind between. I plan to use the A* algorithm on the density heatmap matrix to generate the optimal path.</li>
+</ol>
+<p>Flowcharts for the overall pathfinding process, data filtering and cleaning, and chart creation is below.
+<img src="/flowcharts.png" alt="Flowcharts"></p>
+<p>Wireframes for the  <code>Pathfinding</code> and <code>Statistics</code> page below (originally I only planned to have these 2 pages, but soon after I decided to change the structure).
+<img src="/wireframe-pathfinding.png" alt="Wireframe for pathfinding page">
+<img src="/wireframe-statistics.png" alt="Wireframe for statistics page"></p>
+<h2 id="4-create">4. Create</h2>
+<h3 id="log">Log</h3>
+<p>Week 1:</p>
+<ul>
+<li>Looked through and analysed project brief for requirements</li>
+</ul>
+<p>Week 2:</p>
+<ul>
+<li>Created report document</li>
+<li>Brainstormed 3 ideas</li>
+</ul>
+<p>Week 3:</p>
+<ul>
+<li>Looked at dataset</li>
+<li>Chose new dataset</li>
+<li>Filtered data (<code>data_filter.py</code>)</li>
+</ul>
+<p>Week 4:</p>
+<ul>
+<li>Created wireframe</li>
+<li>Researched data visualisation options</li>
+</ul>
+<p>Week 5:</p>
+<ul>
+<li>Finished second data cleaning (approx 650k rows now) (<code>secondary_filter.py</code>)</li>
+</ul>
+<p>Week 6:</p>
+<ul>
+<li>Worked on server (<code>app.py</code>)</li>
+<li>Worked on homepage (<code>index.html</code>)</li>
+</ul>
+<p>Week 7:</p>
+<ul>
+<li>Worked on server (<code>app.py</code>)</li>
+<li>Worked on statistics page (<code>statistics.html</code>)</li>
+</ul>
+<p>Week 8:</p>
+<ul>
+<li>Worked on barchart (<code>charts.py</code>)</li>
+</ul>
+<p>Week 9:</p>
+<ul>
+<li>Worked on heatmap (<code>charts.py</code>)</li>
+</ul>
+<p>Week 10:</p>
+<ul>
+<li>Rewrote visuals in plotly (<code>charts.py</code>)</li>
+<li>Worked on server (<code>app.py</code>)</li>
+<li>Worked on pathfinding (<code>pathfinding.html</code>)</li>
+<li>Worked on pathfinding page (<code>pathfinding.py</code>)</li>
+</ul>
+<p>Week 11:</p>
+<ul>
+<li>Finished website</li>
+</ul>
+<p>I had the starting data saved in <code>Artefact/data_filter/data</code>, inside which they are sorted by years, and follow the naming scheme <code>SCATS{month}{year}.csv</code>. An example of one such file is <code>Artefact/data_filter/data/2020/SCATSJanuary2020.csv</code>. The files <code>Artefact/data_filter/data_filter</code> and <code>Artefact/data_filter/secondary_filter</code> are files which are run in that order to filter and clean the data. After running <code>Artefact/data_filter/data_filter</code>, the data will be filtered and cleaned to be stored in <code>Artefact/data_filter/output_data</code>, within which has the same structure as <code>Artefact/data_filter/data</code>. This stores the data of only the dates I will use, with a reformatted time (separated into year, month, day, hour, minute, second). After running <code>Artefact/data_filter/secondary_filter</code>, the data is summed up by site (the data is separated by multiple sensors at each site) and stored up in the SQL file <code>Artefact/data_filter/database.db</code>.</p>
+<p>The data from <code>database.db</code> was used to create the bar charts and heatmaps. I had to generate the holiday dates for each year to create these visualisations as most holidays changed dates every year. I summed up the total traffic in a year for the years of which I had data for that holiday, and plotted it on a bar chart. I also took the latitude, longitude, and traffic volume of each row which corresponded to a certain holiday on a certain year to create the heatmaps.</p>
+<p>I faced a few issues while working on the project:</p>
+<ul>
+<li>After looking into the SDCC traffic congestion database, I found the SCATS traffic congestion database, which has much more sites. However, faced with the large amount of data, I decided to restrict my project to the 10 public holidays only, the holidays being:<ul>
+<li>New Year&#39;s Day</li>
+<li>St Brigid&#39;s Day</li>
+<li>St Patrick&#39;s Day</li>
+<li>Easter Monday</li>
+<li>May Bank Holiday</li>
+<li>June Bank Holiday</li>
+<li>August Bank Holiday</li>
+<li>October Bank Holiday</li>
+<li>Christmas Day</li>
+<li>St Stephen&#39;s Day
+This now meant that my target demographic shifted a bit, to people who would commute during holidays, which targets tourists more as well.</li>
+</ul>
+</li>
+<li>Audio didn&#39;t work in school, so we had to record stuff at home</li>
+<li>I kept on getting <code>ImportError: attempted relative import with no known parent package</code>, since my code was split across 3 modules. The solution that I found was to run everything as <code>python -m Artefact.module.file</code>, as this allows for the parent packages to be known.</li>
+<li>One of my biggest issues was Plotly not working when I tried to inject it into the website. Since I needed to be able to have the visualisations change, I needed to be able to dynamically change them out. However, when I tried to send the file over as a string and change the <code>.innerHTML</code> of the parent, the visualisation either didn&#39;t show up, or didn&#39;t have any data. I still don&#39;t know why this was the case, but I found a solution. I decided to display them using <code>&lt;iframe&gt;</code>s, changing the <code>src</code> using JavaScript to change the visualisation.</li>
+</ul>
+<p>The A* algorithm that I used is a modified version of Dijkstra&#39;s algorithm, but with a heuristic added on, which encourages the algorithm to look for paths towards the destination. The pseudocode for the A* algorithm is below.</p>
+<pre><code>input start_latitude, start_longitude, end_latitude, end_longitude, heatmap_matrix, latitude_edges, longitude_edges
+
+<span class="hljs-keyword">set</span> start_latitude <span class="hljs-keyword">to</span> the closest value <span class="hljs-keyword">from</span> latitude_edges
+<span class="hljs-keyword">set</span> start_longitude <span class="hljs-keyword">to</span> the closest value <span class="hljs-keyword">from</span> longitude_edges
+
+<span class="hljs-keyword">set</span> destination_latitude <span class="hljs-keyword">to</span> the closest value <span class="hljs-keyword">from</span> latitude_edges
+<span class="hljs-keyword">set</span> destination_longitude <span class="hljs-keyword">to</span> the closest value <span class="hljs-keyword">from</span> longitude_edges
+
+<span class="hljs-keyword">set</span> start_point <span class="hljs-keyword">to</span> be a tuple <span class="hljs-keyword">of</span> start_latitude <span class="hljs-keyword">and</span> start_longitude
+<span class="hljs-keyword">set</span> destination_point <span class="hljs-keyword">to</span> be a tuple <span class="hljs-keyword">of</span> destination_latitude <span class="hljs-keyword">and</span> destination_longitude
+
+<span class="hljs-keyword">set</span> came_from <span class="hljs-keyword">to</span> be an empty dictionary
+<span class="hljs-keyword">set</span> g_score <span class="hljs-keyword">to</span> be a dictionary <span class="hljs-keyword">with</span> keys <span class="hljs-keyword">as</span> the points <span class="hljs-keyword">and</span> all values <span class="hljs-keyword">to</span> be infinity
+<span class="hljs-keyword">set</span> g_score <span class="hljs-keyword">of</span> start_point <span class="hljs-keyword">to</span> <span class="hljs-number">0</span>
+
+<span class="hljs-keyword">set</span> f_score <span class="hljs-keyword">to</span> be a dictionary <span class="hljs-keyword">with</span> keys <span class="hljs-keyword">as</span> the points <span class="hljs-keyword">and</span> all values <span class="hljs-keyword">to</span> be infinity
+<span class="hljs-keyword">set</span> f_score <span class="hljs-keyword">of</span> start_point <span class="hljs-keyword">to</span> be the Euclidean distance between it <span class="hljs-keyword">and</span> the destination_point
+
+<span class="hljs-keyword">set</span> open_set <span class="hljs-keyword">to</span> contain tuple <span class="hljs-keyword">of</span> the f_score <span class="hljs-keyword">of</span> the start_point <span class="hljs-keyword">and</span> the start_point itself
+
+<span class="hljs-keyword">while</span> <span class="hljs-keyword">loop</span>:
+    pop the smallest value <span class="hljs-keyword">from</span> open_set, ordered <span class="hljs-keyword">by</span> the f_scores
+    <span class="hljs-keyword">set</span> current <span class="hljs-keyword">to</span> popped <span class="hljs-keyword">off</span> point
+
+    <span class="hljs-keyword">if</span> the current <span class="hljs-keyword">is</span> the desination_point:
+        retrace steps <span class="hljs-keyword">using</span> came_from <span class="hljs-keyword">to</span> form the path
+        <span class="hljs-keyword">return</span> path
+
+    <span class="hljs-keyword">set</span> neighbours <span class="hljs-keyword">to</span> the neighbouring cells <span class="hljs-keyword">in</span> the matrix (includes diagonal)
+
+    <span class="hljs-keyword">for</span> <span class="hljs-keyword">loop</span> neighbours:
+        <span class="hljs-keyword">set</span> neighbour <span class="hljs-keyword">to</span> <span class="hljs-keyword">next</span> element
+
+        <span class="hljs-keyword">set</span> tentative_g_score <span class="hljs-keyword">to</span> the current element<span class="hljs-comment">'s g_score plus the weight (from the matrix) of the neighbour point</span>
+
+        <span class="hljs-keyword">if</span> the tentative_g_score <span class="hljs-keyword">is</span> less than the g_score <span class="hljs-keyword">of</span> the neighbour:
+            <span class="hljs-keyword">set</span> came_from <span class="hljs-keyword">of</span> the <span class="hljs-keyword">key</span> neighbour <span class="hljs-keyword">to</span> the value current
+            <span class="hljs-keyword">set</span> g_score <span class="hljs-keyword">of</span> the neighbour <span class="hljs-keyword">to</span> the tentative_g_score
+            <span class="hljs-keyword">set</span> f_score <span class="hljs-keyword">of</span> the neighbour <span class="hljs-keyword">to</span> the g_score <span class="hljs-keyword">of</span> the neighbour plus the Euclidean distance <span class="hljs-keyword">of</span> the neighbour <span class="hljs-keyword">and</span> the destination
+            <span class="hljs-keyword">if</span> the neighbour <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> the open_set:    
+                push a tuple <span class="hljs-keyword">of</span> the f_score <span class="hljs-keyword">of</span> the neighbour <span class="hljs-keyword">and</span> the neighbour onto the open_set
+
+<span class="hljs-keyword">return</span> an empty list
+</code></pre><h3 id="testing">Testing</h3>
+<p>I was only able to do testing by hand and was unable to set up any unittests, as I wasn&#39;t sure how I&#39;d verify the validity of some of the responses (e.g. heatmaps being created). Below are some of the cases I tested.</p>
+<h4 id="statistics-page">Statistics Page</h4>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Expected Result</th>
+<th>Actual Result</th>
+<th>Pass/Fail</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Changed holiday using forms</td>
+<td>Visualisations would change to the correct ones</td>
+<td>They changed correct graphs</td>
+<td>Pass</td>
+<td>The charts were able to successfully change to correspond to the holiday selected</td>
+</tr>
+<tr>
+<td>Selected year to be 2024 and then tried to select an invalid holiday (missing data)</td>
+<td>Disables the invalid holiday as options</td>
+<td>Invalid holiday disables</td>
+<td>Pass</td>
+<td>The invalid holidays were disabled, so they couldn&#39;t be selected, as the corresponding graphs didn&#39;t exist</td>
+</tr>
+<tr>
+<td>Select invalid 2024 holidays before changing the year to 2024, then changing the year to 2024</td>
+<td>Change the holiday to a valid one</td>
+<td>Holiday changes to &quot;New Year&#39;s Day&quot;</td>
+<td>Pass</td>
+<td>The holiday was changed so the user can&#39;t have an invalid holiday selected</td>
+</tr>
+</tbody>
+</table>
+<h4 id="pathfinding-page">Pathfinding Page</h4>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Expected Result</th>
+<th>Actual Result</th>
+<th>Pass/Fail</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Changed holiday using forms</td>
+<td>Heatmap would change to the have the correct data</td>
+<td>The heatmap got the correct data</td>
+<td>Pass</td>
+<td>The heatmap was able to successfully change to get data that corresponded to the holiday selected</td>
+</tr>
+<tr>
+<td>Set end time to be the same as or before start time</td>
+<td>Alerts the user of the error</td>
+<td>Alerts the user</td>
+<td>Pass</td>
+<td>The heatmap wasn&#39;t changed as the inputs were invalid</td>
+</tr>
+<tr>
+<td>Trying to submit empty latitudes and longitudes</td>
+<td>Popup saying there&#39;s missing fields</td>
+<td>Popups show</td>
+<td>Pass</td>
+<td>The user is made aware of missing fields</td>
+</tr>
+<tr>
+<td>Trying to submit invalid latitudes and longitudes</td>
+<td>Alert saying there&#39;s invalid fields</td>
+<td>Alert shows</td>
+<td>Pass</td>
+<td>The user is made aware that the one of the latitudes or longitudes is invalid</td>
+</tr>
+<tr>
+<td>Submits correct data for pathfinding</td>
+<td>Path generated</td>
+<td>Path is plotted on the map</td>
+<td>Pass</td>
+<td>The intended response occurs</td>
+</tr>
+<tr>
+<td>Tries to give feedback with incorrect fields (co-ordinates or times)</td>
+<td>Alerts user of the issue</td>
+<td>Alert shows</td>
+<td>Pass</td>
+<td>The user is made aware of the incorrect data</td>
+</tr>
+<tr>
+<td>Tries to give feedback with empty fields</td>
+<td>Popup saying there&#39;s missing fieldsd</td>
+<td>Popups show</td>
+<td>Pass</td>
+<td>The user is made aware of missing fields</td>
+</tr>
+<tr>
+<td>Feedback given with valid fields</td>
+<td>Alert thanking user for feedback shows</td>
+<td>Alert shows</td>
+<td>Pass</td>
+<td>Feedback is successfully sent to the server and stored</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-evaluation">5. Evaluation</h2>
+<p>I enjoyed working on this project. I believe that my project met the BRs and ARs quite well. However, there are things that I would like to have improved on.</p>
+<p>First of all, since the data is there, I would have liked to repeat the process for every single day, to create a more day-to-day tool rather than a seasonal one. However, the sheer amount of data was too much for this project.</p>
+<p>Secondly, I would have liked to have more data in different areas, as the vast majority of the volume data that I had lay within the M50. Once again, this would be a lot of data, but given a lot more time I think that this would be possible. This would allow for this project to benefit more people.</p>
+<p>Thirdly, I would have liked to be able to collect data on the users, such as their speed and GPS co-ordinates, and save and use it to help calculate more accurate routes.</p>
+<p>Fourthly, I would have liked to be able to access road data, and suggest real routes rather than a vague outline of the shape of a path. However, the data I found was probably not comprehensive enough, and would have complicated the project too much.</p>
+<p>Fifthly, I would have tweaked the pathfinding algorithm a bit, as currently the relationship between how much the distance and the volume affects it could be improved.</p>
+<p>Sixthly, in the <code>Pathfinding</code> page I forgot to join the markers to the path if the markers lay outside the heatmap area. I would go back and change this if I had more time.</p>
+<p>Lastly, given more time, I would have liked to make the mobile responsiveness of the website nicer, like in my wireframes. Unfortunately, I never really got around to improving them, and they remain as vertical versions of their desktop counterparts.</p>
+<h2 id="6-references">6. References</h2>
+<p>Technologies:</p>
+<ul>
+<li><a href="https://www.python.org/">Python</a>: Main programming language I used</li>
+<li><a href="https://en.wikipedia.org/wiki/HTML">HTML</a>, <a href="https://en.wikipedia.org/wiki/Cascading_Style_Sheets">CSS</a>, <a href="https://en.wikipedia.org/wiki/JavaScript">JavaScript</a>: Used to build website frontend</li>
+<li><a href="https://github.com/">GitHub</a>: Hosts git repositories</li>
+<li><a href="https://git-scm.com/">Git</a>: Version control tool</li>
+<li><a href="https://pypi.org/project/pip/">pip</a>: Used to download Python modules/libraries/frameworks</li>
+<li><a href="https://www.npmjs.com/">npm</a>: Used to download JS modules/libraries/frameworks</li>
+<li><a href="https://www.sqlite.org/">SQLite</a>: Database used</li>
+<li><a href="https://code.visualstudio.com/">VsCode</a>: Code editor</li>
+<li><a href="https://www.figma.com/">Figma</a>: Used for wireframes and flowcharts</li>
+</ul>
+<p>Python modules/libraries/frameworks:</p>
+<ul>
+<li><a href="https://flask.palletsprojects.com/en/stable/">Flask</a>: Server</li>
+<li><a href="https://plotly.com/">Plotly</a>: Visualisations</li>
+<li><a href="https://matplotlib.org/">Matplotlib</a>: Originally used for visualisations</li>
+<li><a href="https://pypi.org/project/aiosqlite/">Aiosqlite</a>: Asynchronous version of sqlite3</li>
+<li><a href="https://numpy.org/">Numpy</a>: Mathematical analysis</li>
+<li><a href="https://scipy.org/">Scipy</a>: Histogram and other mathematical tools</li>
+<li><a href="https://pypi.org/project/waitress/">Waitress</a>: Used to run server</li>
+</ul>
+<p>HTML, CSS, JavaScript modules/libraries/frameworks:</p>
+<ul>
+<li><a href="https://getbootstrap.com/">Bootstrap</a>: Frontend components/styling tools</li>
+<li><a href="https://leafletjs.com/">Leaflet</a>: Map to be used in pathfinding</li>
+<li><a href="https://www.patrick-wied.at/static/heatmapjs/">Heatmap.js</a>: Heatmap to be overlayed on Leaflet map</li>
+<li><a href="https://fonts.google.com/specimen/Kode+Mono">Kode Mono</a>: Font used in navbar</li>
+</ul>
+<p>Other:</p>
+<ul>
+<li><a href="https://www.google.ie/">Google</a>: Search engine used</li>
+<li><a href="https://stackoverflow.com/">Stackoverflow</a>: Problems to issues I had</li>
+<li><a href="https://docs.python.org/3/">Python Docs</a>: Standard library docs</li>
+<li><a href="https://developer.mozilla.org/en-US/">Mozilla Docs</a>: CSS, JS docs</li>
+<li><a href="https://www.w3schools.com/">W3 Schools</a>: Code examples</li>
+<li><a href="https://www.geeksforgeeks.org/">GeeksForGeeks</a>: Code examples</li>
+<li><a href="https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/leave-and-holidays/public-holidays/">Citizens Information</a>: Dates for public holidays</li>
+<li><a href="https://markdowntohtml.com/">Markdown To HTML</a>: Used to convert my <code>report.md</code> to an <code>index.html</code> (I wrote my report in Markdown before turning it into HTML)</li>
+</ul>
+<p>Existing Solutions:</p>
+<ul>
+<li><a href="https://www.nutritionvalue.org/nutritioncalculator.php">Nutrition Value</a></li>
+<li><a href="https://www.bettingpros.com/nba/picks/prop-bets/">BettingPros</a></li>
+<li><a href="https://www.google.com/maps">Google Maps</a></li>
+</ul>
+<p>Datasets:</p>
+<ul>
+<li><a href="https://data.smartdublin.ie/dataset/traffic-signals-and-scats-sites-locations-dcc">SCATS Traffic Sites</a></li>
+<li>Various biannual datasets:<ul>
+<li><a href="https://data.smartdublin.ie/dataset/dcc-scats-detector-volume-jan-jun-2020">Jan-Jun 2020</a></li>
+<li><a href="https://data.smartdublin.ie/dataset/dcc-scats-detector-volume-jul-dec-2020">Jul-Dec 2020</a></li>
+<li><a href="https://data.smartdublin.ie/dataset/dcc-scats-detector-volume-jan-jun-2021">Jan-Jun 2021</a></li>
+<li><a href="https://data.smartdublin.ie/dataset/traffic-volumes-from-scats-traffic-management-system-jul-dec-2021-dcc">Jul-Dec 2021</a></li>
+<li><a href="https://data.smartdublin.ie/dataset/dcc-scats-detector-volume-jan-jun-2022">Jan-Jun 2022</a></li>
+<li><a href="https://data.smartdublin.ie/dataset/dcc-scats-detector-volume-jul-dec-2022">Jul-Dec 2022</a></li>
+<li><a href="https://data.smartdublin.ie/dataset/dcc-scats-detector-volume-jan-jun-2023">Jan-Jun 2023</a></li>
+<li><a href="https://data.smartdublin.ie/dataset/dcc-scats-detector-volume-jul-dec-2023">Jul-Dec 2023</a></li>
+<li><a href="https://data.smartdublin.ie/dataset/dcc-scats-detector-volume-jan-jun-2024">Jan-Jun 2024</a></li>
+<li><a href="https://data.smartdublin.ie/dataset/dcc-scats-detector-volume-jul-dec-2024">Jul-Dec 2024</a></li>
+</ul>
+</li>
+<li><a href="https://data.gov.ie/dataset/traffic-flow-data-jan-to-june-2022-sdcc1">Traffic Flow Data Jan to June 2022 SDCC</a>: One of the original datasets that I found for traffic</li>
+<li><a href="https://www.kaggle.com/datasets/gokulprasantht/nutrition-dataset">Nutrition Dataset</a>: Dataset for nutrition</li>
+<li><a href="https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions">Food.com Recipes</a>: Recipies dataset</li>
+<li><a href="https://www.kaggle.com/datasets/wyattowalsh/basketball">NBA Database</a>: Database of player stats</li>
+</ul>
+<h2 id="7-summary-word-count">7. Summary Word Count</h2>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Word Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Meeting the brief</td>
+<td>34 + (Video)</td>
+</tr>
+<tr>
+<td>2. Investigation</td>
+<td>473</td>
+</tr>
+<tr>
+<td>3. Plan and Design</td>
+<td>580</td>
+</tr>
+<tr>
+<td>4. Create</td>
+<td>1021</td>
+</tr>
+<tr>
+<td>5. Evaluation</td>
+<td>310</td>
+</tr>
+<tr>
+<td><strong>Total:</strong></td>
+<td>2418</td>
+</tr>
+</tbody>
+</table>
+
+  </body>
+</html>
